@@ -4,11 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>papercade — a pixel × sketch design library</title>
-  <meta name="description" content="papercade: pixel-game UI meets hand-drawn Excalidraw style. Tokens, CSS components, and (soon) a bring-your-own-sprite-sheet mascot." />
+  <meta name="description" content="papercade: pixel-game UI meets hand-drawn Excalidraw style. Design tokens, twelve components, and a bring-your-own-sprite-sheet mascot." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Caveat:wght@400..700&family=Poppins:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400..600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./dist/papercade.css" />
+  <!-- ?direct tells the dev server to hand back plain CSS instead of wrapping it
+       in a JS module; a static host just ignores the query. -->
+  <link rel="stylesheet" href="./dist/papercade.css?direct" />
   <script type="module">
     import { coins } from "./dist/papercade.js";
     document.getElementById("resetCoins")?.addEventListener("click", () => coins.reset());

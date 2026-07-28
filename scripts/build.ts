@@ -1,5 +1,7 @@
 import { execFileSync } from "node:child_process";
-import { cp, readFile, writeFile } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { cp, readFile, symlink, writeFile } from "node:fs/promises";
+import { resolve } from "node:path";
 import rough from "roughjs/bundled/rough.esm.js";
 import StyleDictionary from "style-dictionary";
 import { build as viteBuild } from "vite";
@@ -142,5 +144,16 @@ await viteBuild({
 execFileSync(process.execPath, ["node_modules/typescript/bin/tsc", "-p", "tsconfig.build.json"], {
   stdio: "inherit",
 });
+
+// 5. the demo loads ./dist/* relative to itself. Link rather than copy, so the
+//    same relative path resolves in dev and in the deployed artifact, and the
+//    build stays the single source of those files. CI copies instead.
+if (!existsSync("site/dist")) {
+  try {
+    await symlink(resolve("dist"), "site/dist", "junction");
+  } catch {
+    console.warn("could not link site/dist — copy dist/ into site/ to preview");
+  }
+}
 
 console.log(`papercade v${pkg.version}: css, fonts, art and elements built`);

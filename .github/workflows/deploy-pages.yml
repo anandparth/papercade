@@ -41,8 +41,8 @@ jobs:
       - name: Build library
         run: pnpm build
 
-      - name: Stage the demo (site/ is the Pages artifact; dist/ is served at /dist)
-        run: cp -r dist site/dist
+      - name: Stage the demo (site/ is the Pages artifact and loads ./dist/*)
+        run: rm -rf site/dist && cp -r dist site/dist
 
       - uses: actions/configure-pages@v5
 

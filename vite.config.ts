@@ -1,41 +1,28 @@
-import { createReadStream, existsSync, statSync } from "node:fs";
-import { extname, join, resolve } from "node:path";
+import { resolve } from "node:path";
 import { defineConfig, type PluginOption } from "vite";
 
 const DIST = resolve("dist");
-// module scripts are refused outright unless the type is right
-const MIME: Record<string, string> = {
-  ".css": "text/css",
-  ".js": "text/javascript",
-  ".cjs": "text/javascript",
-  ".webp": "image/webp",
-  ".woff2": "font/woff2",
-  ".txt": "text/plain",
-};
 
-// site/index.html loads the real build output through a plain <link>, which is
-// outside vite's module graph. Serve dist/ straight from disk (no copy, no
-// caching) and full-reload the page whenever `pnpm watch` rewrites it.
-const serveDist: PluginOption = {
-  name: "papercade:serve-dist",
+// site/dist is a link to the build output (see scripts/build.ts), so vite
+// serves it normally. It sits outside vite's module graph though — it arrives
+// through a plain <link>/<script> — so nudge the browser when it changes.
+const reloadOnBuild: PluginOption = {
+  name: "papercade:reload-on-build",
   configureServer(server) {
     server.watcher.add(DIST);
     server.watcher.on("change", (file) => {
       if (file.startsWith(DIST)) server.ws.send({ type: "full-reload" });
-    });
-
-    server.middlewares.use("/dist", (req, res, next) => {
-      const file = join(DIST, (req.url ?? "").split("?")[0] ?? "");
-      if (!file.startsWith(DIST) || !existsSync(file) || !statSync(file).isFile()) return next();
-      res.setHeader("Content-Type", MIME[extname(file)] ?? "application/octet-stream");
-      res.setHeader("Cache-Control", "no-store");
-      createReadStream(file).pipe(res);
     });
   },
 };
 
 export default defineConfig({
   root: "site",
-  server: { port: 5844, strictPort: true },
-  plugins: [serveDist],
+  server: {
+    port: 5844,
+    strictPort: true,
+    // the link resolves to the repo root, which is outside vite's root
+    fs: { allow: [resolve(".")] },
+  },
+  plugins: [reloadOnBuild],
 });
