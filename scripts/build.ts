@@ -109,6 +109,8 @@ const parts: string[] = [
   "src/css/components/chip.css",
   "src/css/components/coin.css",
   "src/css/components/dialogue.css",
+  "src/css/components/flipcard.css",
+  "src/css/components/holo.css",
   "src/css/components/note.css",
   "src/css/components/quest.css",
   "src/css/components/xp.css",

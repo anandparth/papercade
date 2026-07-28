@@ -52,10 +52,9 @@ pnpm dev          # live demo at localhost:5844, in another
 | Tokens | DTCG `tokens/tokens.json` → Style Dictionary → `--px-*` CSS custom properties (paper/ink palette, Excalidraw stroke+fill pairs, pixel motion curves) | ✅ |
 | Surfaces & type | `.px-paper` / `.px-screen` dot-grid surfaces, `.px-mono` HUD labels, `.px-hand` notes, `.px-hl` marker highlight | ✅ |
 | Static components | `.px-frame` pixel box · `.px-btn` sketch button · `.px-card` sketch card (build-time rough.js border) · `.px-dialogue` RPG dialogue · `.px-note` / `.px-arrow` annotation · `.px-quest` quest select · `.px-chip` HUD chip · `.px-xp` / `.px-hp` meters | ✅ 8 of 8 |
-| Custom elements | `<px-avatar>` bring-your-own-sprite-sheet mascot · `<px-coin>` collectible + shared wallet | ✅ 2 of 4 |
-| More elements | holo unit card · flip card | planned |
+| Custom elements | `<px-avatar>` bring-your-own-sprite-sheet mascot · `<px-coin>` collectible + shared wallet · `<px-holo-card>` foil tilt · `<px-flipcard>` two-face turn | ✅ 4 of 4 |
 
-v1 ships **exactly 12 components** and stops. No generic form controls — your `<select>` is fine as it is.
+v1 ships **exactly 12 components** and stops. No generic form controls — your `<select>` is fine as it is. Every element is light-DOM and does as little as possible: the motion lives in CSS custom properties, so the markup still renders when the script does not.
 
 ## Using & theming
 
@@ -95,6 +94,10 @@ Drive the wallet directly when you need to — `coins.add(-10)` is how you build
 import { coins } from "papercade/elements";
 coins.subscribe((total) => console.log(total));  // returns an unsubscribe
 ```
+
+### Cards
+
+`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. `<px-flipcard>` turns over on click or Enter, toggling a `flipped` attribute you can also set yourself; give it two `.px-flipcard-face` children (the second marked `--back`) and an `aspect`. Both are keyboard-operable and announced.
 
 ## Extending
 

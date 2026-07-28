@@ -99,11 +99,18 @@
   outline-offset: 2px;
 }
 
-/* house rule: every animation has a reduced-motion path */
+/* House rule: every animation has a reduced-motion path. Custom element tags
+   are listed because a selector cannot prefix-match a tag name; the inventory
+   is closed at twelve components, so the list is final. Components whose
+   motion must stop dead rather than run fast (sprite playback) override this
+   with `animation: none` of their own. */
 @media (prefers-reduced-motion: reduce) {
   [class^="px-"],
   [class^="px-"]::before,
-  [class^="px-"]::after {
+  [class^="px-"]::after,
+  :is(px-avatar, px-coin, px-flipcard, px-holo-card),
+  :is(px-avatar, px-coin, px-flipcard, px-holo-card)::before,
+  :is(px-avatar, px-coin, px-flipcard, px-holo-card)::after {
     animation-duration: 0.001s !important;
     transition-duration: 0.001s !important;
   }

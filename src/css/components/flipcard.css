@@ -1,0 +1,46 @@
+/* px-flipcard — two faces, one card. The classic photo/illustration swap.
+   Click or press Enter to turn it over. Pure CSS: the element only toggles
+   the [flipped] attribute, so a checkbox or your own script works too.
+
+   <px-flipcard aspect="3/4">
+     <div class="px-flipcard-face"><img src="illustration.webp" alt="Drawn"></div>
+     <div class="px-flipcard-face px-flipcard-face--back"><img src="photo.webp" alt="Real"></div>
+   </px-flipcard>
+
+   Theme with --px-flipcard-depth and --px-flipcard-turn.                   */
+
+/* the perspective is a transform function, not the property: the card itself
+   is what rotates, and the property only ever applies to children */
+px-flipcard,
+.px-flipcard {
+  position: relative;
+  display: block;
+  aspect-ratio: var(--px-flipcard-aspect, 3 / 4);
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: perspective(var(--px-flipcard-depth, 1400px)) rotateY(0deg);
+  transition: transform var(--px-flipcard-turn, 700ms) ease;
+}
+
+px-flipcard[flipped],
+.px-flipcard.is-flipped {
+  transform: perspective(var(--px-flipcard-depth, 1400px)) rotateY(180deg);
+}
+
+.px-flipcard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.px-flipcard-face--back {
+  transform: rotateY(180deg);
+}
+
+.px-flipcard-face img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom;
+}

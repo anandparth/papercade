@@ -1,0 +1,82 @@
+/* px-holo-card — the foil trading card.
+   Tilt and sheen are driven entirely by two custom properties the element
+   writes from the pointer: --px-holo-x and --px-holo-y, each -1 to 1. With
+   no script they stay 0 and the card is simply a flat unit card.
+
+   <px-holo-card>
+     <p class="px-mono">unit card · holo</p>
+     <h3>Parth Anand</h3>
+   </px-holo-card>
+
+   Theme with --px-holo-tilt, --px-holo-depth, --px-holo-bg, --px-holo-fg.  */
+
+px-holo-card,
+.px-holo-card {
+  position: relative;
+  display: block;
+  isolation: isolate;
+  padding: 16px 18px;
+  color: var(--px-holo-fg, var(--px-color-screen-headline));
+  background: var(--px-holo-bg, var(--px-color-screen-card));
+  border: 2px solid var(--px-color-screen-frame);
+  box-shadow: 5px 7px 0 rgb(0 0 0 / 40%);
+  transform: perspective(var(--px-holo-depth, 900px))
+    rotateY(calc(var(--px-holo-x, 0) * var(--px-holo-tilt, 9deg)))
+    rotateX(calc(var(--px-holo-y, 0) * var(--px-holo-tilt, 9deg) * -1));
+  transition: transform 220ms ease-out;
+}
+
+/* the foil: papercade's own sketch palette, not a generic rainbow */
+px-holo-card::after,
+.px-holo-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: var(--px-holo-shine, 0);
+  mix-blend-mode: color-dodge;
+  background-image: repeating-linear-gradient(
+    115deg,
+    transparent 0%,
+    var(--px-color-sketch-blue-fill) 7%,
+    var(--px-color-sketch-violet-fill) 13%,
+    var(--px-color-sketch-green-fill) 19%,
+    var(--px-color-sketch-yellow-fill) 25%,
+    transparent 32%
+  );
+  background-size: 260% 260%;
+  background-position: calc(50% + var(--px-holo-x, 0) * 40%) calc(50% + var(--px-holo-y, 0) * 40%);
+  transition: opacity 220ms ease;
+}
+
+/* the glare: a soft highlight that tracks the cursor */
+px-holo-card::before,
+.px-holo-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: var(--px-holo-shine, 0);
+  background: radial-gradient(
+    circle at calc(50% + var(--px-holo-x, 0) * 50%) calc(50% - var(--px-holo-y, 0) * 50%),
+    rgb(255 255 255 / 38%),
+    transparent 48%
+  );
+  transition: opacity 220ms ease;
+}
+
+px-holo-card:hover,
+px-holo-card:focus-visible,
+.px-holo-card:hover {
+  --px-holo-shine: 0.75;
+}
+
+/* keyboard users get the foil without the pointer-driven tilt */
+@media (prefers-reduced-motion: reduce) {
+  px-holo-card,
+  .px-holo-card {
+    transform: none;
+  }
+}

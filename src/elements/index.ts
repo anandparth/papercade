@@ -4,13 +4,17 @@
  */
 import { PxAvatar } from "./px-avatar.js";
 import { PxCoin } from "./px-coin.js";
+import { PxFlipcard } from "./px-flipcard.js";
+import { PxHoloCard } from "./px-holo-card.js";
 import { coins } from "./wallet.js";
 
-export { PxAvatar, PxCoin, coins };
+export { PxAvatar, PxCoin, PxFlipcard, PxHoloCard, coins };
 
 const REGISTRY: ReadonlyArray<readonly [string, CustomElementConstructor]> = [
   ["px-avatar", PxAvatar],
   ["px-coin", PxCoin],
+  ["px-flipcard", PxFlipcard],
+  ["px-holo-card", PxHoloCard],
 ];
 
 if (typeof customElements !== "undefined") {

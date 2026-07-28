@@ -64,6 +64,39 @@
       </div>
     </section>
 
+    <section>
+      <h2>px-holo-card / px-flipcard <span class="px-hl">the unit cards</span></h2>
+      <div class="row" style="gap: 28px; align-items: flex-start">
+        <px-holo-card style="width: 240px">
+          <p class="px-mono">unit card · holo</p>
+          <h3 style="font-family: var(--px-font-display); margin: 8px 0 12px">Parth Anand</h3>
+          <div class="px-xp px-xp--screen" role="progressbar" aria-label="Craft" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88">
+            <span class="px-xp-fill" style="--px-xp: 88%"></span>
+          </div>
+          <p class="px-mono" style="margin-top: 10px">move your cursor across me</p>
+        </px-holo-card>
+
+        <px-flipcard aspect="3 / 4" label="Flip between drawing and photo" style="width: 200px">
+          <div class="px-flipcard-face">
+            <div class="px-frame" style="height: 100%">
+              <div class="px-frame-fill" style="height: 100%; display: grid; place-items: center">
+                <span class="px-hand">the drawn one ✏</span>
+              </div>
+            </div>
+          </div>
+          <div class="px-flipcard-face px-flipcard-face--back">
+            <div class="px-frame px-frame--screen" style="height: 100%">
+              <div class="px-frame-fill" style="height: 100%; display: grid; place-items: center">
+                <span class="px-mono">the real one</span>
+              </div>
+            </div>
+          </div>
+        </px-flipcard>
+
+        <span class="px-note" style="--px-note-rot: 2deg">click the right-hand card ✏</span>
+      </div>
+    </section>
+
     <section id="tokens">
       <h2>tokens <span class="px-hl">the palette</span></h2>
       <p class="px-mono" style="margin-bottom: 12px">paper · ink · accent · amber · excalidraw pairs</p>
@@ -232,7 +265,7 @@
     </section>
 
     <footer>
-      <p class="px-mono">papercade v0.1.0 · 10 of 12 · sounds off by default</p>
+      <p class="px-mono">papercade v0.1.0 · 12 of 12 · v1 inventory complete</p>
       <p class="px-hand" style="margin-top: 8px">drawn &amp; built by parth ✏</p>
     </footer>
   </main>
