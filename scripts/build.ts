@@ -73,6 +73,7 @@ const parts: string[] = [
   "src/css/components/frame.css",
   "src/css/components/button.css",
   "src/css/components/card.css",
+  "src/css/components/dialogue.css",
   "src/css/components/note.css",
   "src/css/components/xp.css",
 ];

@@ -1,5 +1,5 @@
 /* px-frame — the pixel-cornered box.
-   A 20-point clip-path cuts stepped 8-bit corners; applied twice
+   --px-clip-pixel cuts stepped 8-bit corners; applied twice
    (outer = frame colour, inner = fill, margin 2px) so vertices stay closed.
 
    <div class="px-frame"><div class="px-frame-fill">…</div></div>
@@ -8,13 +8,7 @@
 
 .px-frame,
 .px-frame-fill {
-  clip-path: polygon(
-    0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
-    calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
-    100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
-    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
-    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
-  );
+  clip-path: var(--px-clip-pixel);
 }
 
 .px-frame {

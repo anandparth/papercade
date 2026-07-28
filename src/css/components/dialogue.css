@@ -1,0 +1,74 @@
+/* px-dialogue — the RPG dialogue box.
+   Pixel-cornered box (shared --px-clip-pixel) plus a two-step staircase tail
+   drawn on the wrapper, so the tail escapes the clip and breaks through the
+   border like a cartridge-era dialogue box. Wrap <em> for the amber highlight.
+
+   <div class="px-dialogue px-dialogue--left">
+     <p class="px-dialogue-box">IT'S DANGEROUS TO SHIP ALONE. <em>TAKE THIS.</em></p>
+   </div>
+
+   Theme with: --px-dialogue-bg, --px-dialogue-fg, --px-dialogue-max.        */
+
+.px-dialogue {
+  position: relative;
+  display: inline-block;
+  width: max-content;
+  max-width: var(--px-dialogue-max, 260px);
+  filter: drop-shadow(3px 3px 0 color-mix(in srgb, var(--px-color-ink) 30%, transparent));
+}
+
+.px-dialogue-box {
+  display: block;
+  margin: 0;
+  background: var(--px-dialogue-bg, var(--px-color-screen-bg));
+  color: var(--px-dialogue-fg, var(--px-color-screen-frame));
+  border: 2px solid var(--px-dialogue-fg, var(--px-color-screen-frame));
+  font-family: var(--px-font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  line-height: 1.55;
+  padding: 10px 13px;
+  clip-path: var(--px-clip-pixel);
+}
+
+.px-dialogue em {
+  font-style: normal;
+  color: var(--px-color-amber);
+}
+
+/* the tail: top step overlaps the frame, bottom step steps away from it */
+.px-dialogue::before,
+.px-dialogue::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  background: var(--px-dialogue-bg, var(--px-color-screen-bg));
+}
+
+.px-dialogue::after {
+  bottom: -4px;
+  width: 14px;
+  height: 8px;
+}
+
+.px-dialogue::before {
+  bottom: -10px;
+  width: 7px;
+  height: 6px;
+}
+
+.px-dialogue--left::after,
+.px-dialogue--left::before {
+  left: 8px;
+}
+
+.px-dialogue--right::after,
+.px-dialogue--right::before {
+  right: 8px;
+}
+
+/* speaking from the paper side instead of the game screen */
+.px-dialogue--paper {
+  --px-dialogue-bg: var(--px-color-paper);
+  --px-dialogue-fg: var(--px-color-ink);
+}
