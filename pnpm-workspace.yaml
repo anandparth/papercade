@@ -1,2 +1,8 @@
+# Single package. This file exists only because pnpm 11 moved build-script
+# approval here; `packages` must still be present or `pnpm store path` fails,
+# which is what setup-node's cache calls in CI.
+packages:
+  - .
+
 allowBuilds:
   esbuild: true
