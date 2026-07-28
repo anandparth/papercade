@@ -1,0 +1,83 @@
+/* px-coin — a collectible coin backed by a shared wallet.
+   The sprite is baked from an 8x8 pixel map at build time into
+   --px-coin-sprite. Clicking flips the coin up and away; the running
+   total lands in any element carrying data-px-coins.
+
+   <px-coin></px-coin>
+   <px-coin value="5" sound></px-coin>
+   <span class="px-chip">coins <b data-px-coins>0</b></span>
+
+   Size everything with --px-coin-size; the arc scales with it.            */
+
+px-coin,
+.px-coin {
+  position: relative;
+  display: inline-block;
+  width: var(--px-coin-size, 32px);
+  height: var(--px-coin-size, 32px);
+  background: var(--px-coin-sprite) no-repeat center / contain;
+  cursor: pointer;
+}
+
+/* collected coins hold their space so the layout does not jump */
+px-coin[collected] {
+  visibility: hidden;
+}
+
+/* visibility is explicit: these keep flying after the coin is hidden */
+.px-coin-pop,
+.px-coin-plus {
+  position: absolute;
+  visibility: visible;
+  pointer-events: none;
+}
+
+.px-coin-pop {
+  inset: 0;
+  background: var(--px-coin-sprite) no-repeat center / contain;
+  animation: px-coin-pop 800ms ease-out forwards;
+}
+
+/* two scaleX pinches read as a coin spinning edge-on twice on the way up */
+@keyframes px-coin-pop {
+  0% {
+    transform: translateY(0) scaleX(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateY(calc(var(--px-coin-size, 32px) * -2)) scaleX(0.12);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(calc(var(--px-coin-size, 32px) * -3.25)) scaleX(1);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(calc(var(--px-coin-size, 32px) * -2.875)) scaleX(0.12);
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateY(calc(var(--px-coin-size, 32px) * -1.8)) scaleX(1);
+    opacity: 0;
+  }
+}
+
+.px-coin-plus {
+  left: 50%;
+  top: 0;
+  font-family: var(--px-font-mono);
+  font-size: 0.72rem;
+  color: var(--px-color-amber);
+  animation: px-coin-plus 900ms ease-out forwards;
+}
+
+@keyframes px-coin-plus {
+  from {
+    transform: translate(-50%, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate(-50%, calc(var(--px-coin-size, 32px) * -2.2));
+    opacity: 0;
+  }
+}

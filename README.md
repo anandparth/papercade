@@ -52,8 +52,8 @@ pnpm dev          # live demo at localhost:5844, in another
 | Tokens | DTCG `tokens/tokens.json` → Style Dictionary → `--px-*` CSS custom properties (paper/ink palette, Excalidraw stroke+fill pairs, pixel motion curves) | ✅ |
 | Surfaces & type | `.px-paper` / `.px-screen` dot-grid surfaces, `.px-mono` HUD labels, `.px-hand` notes, `.px-hl` marker highlight | ✅ |
 | Static components | `.px-frame` pixel box · `.px-btn` sketch button · `.px-card` sketch card (build-time rough.js border) · `.px-dialogue` RPG dialogue · `.px-note` / `.px-arrow` annotation · `.px-quest` quest select · `.px-chip` HUD chip · `.px-xp` / `.px-hp` meters | ✅ 8 of 8 |
-| Custom elements | `<px-avatar>` bring-your-own-sprite-sheet mascot | ✅ 1 of 4 |
-| More elements | `<px-coin>` wallet · holo unit card · flip card | planned |
+| Custom elements | `<px-avatar>` bring-your-own-sprite-sheet mascot · `<px-coin>` collectible + shared wallet | ✅ 2 of 4 |
+| More elements | holo unit card · flip card | planned |
 
 v1 ships **exactly 12 components** and stops. No generic form controls — your `<select>` is fine as it is.
 
@@ -79,6 +79,22 @@ v1 ships **exactly 12 components** and stops. No generic form controls — your 
 ```
 
 Omit `src` and you get the bundled mascot (my pixel self, CC BY 4.0 — attribution required, see `LICENSE-GRAPHICS`). Your own sheet stays entirely yours; the component imposes no license on it. Playback is pure CSS, so the markup renders even if the script never loads.
+
+### Coins
+
+`<px-coin>` banks its `value` (default 1) into one wallet shared by every coin on the site, persisted in `localStorage` and synced across tabs. Any element with `data-px-coins` becomes a live readout — pair it with `.px-chip` for the HUD look. Add `sticky` to keep a coin collectable forever, `sound` to opt that coin into a short blip (silence is the default, everywhere), and `label` to name it for screen readers. Each collect fires a bubbling `px-collect` event carrying `{ value, total }`.
+
+```html
+<px-coin value="5"></px-coin>
+<span class="px-chip">coins <b data-px-coins>0</b></span>
+```
+
+Drive the wallet directly when you need to — `coins.add(-10)` is how you build a shop:
+
+```js
+import { coins } from "papercade/elements";
+coins.subscribe((total) => console.log(total));  // returns an unsubscribe
+```
 
 ## Extending
 

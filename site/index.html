@@ -9,7 +9,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Caveat:wght@400..700&family=Poppins:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400..600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./dist/papercade.css" />
-  <script type="module" src="./dist/papercade.js"></script>
+  <script type="module">
+    import { coins } from "./dist/papercade.js";
+    document.getElementById("resetCoins")?.addEventListener("click", () => coins.reset());
+  </script>
   <style>
     /* demo-page chrome only — everything component-shaped comes from papercade.css */
     * { margin: 0; box-sizing: border-box; }
@@ -148,10 +151,27 @@
     <section>
       <h2>px-chip <span class="px-hl">HUD chips</span></h2>
       <div class="row">
-        <span class="px-chip">coins <b>12</b></span>
+        <span class="px-chip">coins <b data-px-coins>0</b></span>
         <span class="px-chip px-chip--tag">level 5</span>
         <span class="px-chip px-chip--screen">hp <b>3</b></span>
       </div>
+    </section>
+
+    <section>
+      <h2>px-coin <span class="px-hl">collectible wallet</span></h2>
+      <div class="row" style="gap: 22px">
+        <px-coin></px-coin>
+        <px-coin value="5" label="Bonus coin worth five"></px-coin>
+        <px-coin sound sticky label="Endless coin, with sound"></px-coin>
+        <span class="px-chip">wallet <b data-px-coins>0</b></span>
+        <button class="px-btn" id="resetCoins">reset</button>
+      </div>
+      <p class="px-hand" style="margin-top: 14px">
+        click one — the total is shared, saved, and survives a reload ✏
+      </p>
+      <p class="px-mono" style="margin-top: 6px">
+        third coin is sticky and opts into sound · everything else stays silent
+      </p>
     </section>
 
     <section>
@@ -212,7 +232,7 @@
     </section>
 
     <footer>
-      <p class="px-mono">papercade v0.1.0 · 9 of 12 · sounds off by default</p>
+      <p class="px-mono">papercade v0.1.0 · 10 of 12 · sounds off by default</p>
       <p class="px-hand" style="margin-top: 8px">drawn &amp; built by parth ✏</p>
     </footer>
   </main>

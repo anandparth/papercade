@@ -8,10 +8,12 @@ const pkg = JSON.parse(await readFile("package.json", "utf8")) as { version: str
 
 // Hand-drawn assets are baked here, never at runtime: deterministic (fixed
 // rough.js seeds), SSR-safe, and free of a runtime dependency.
-const svgUri = (w: number, h: number, body: string): string =>
+const svgUri = (attrs: string, body: string): string =>
   `url("data:image/svg+xml,${encodeURIComponent(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`
+    `<svg xmlns="http://www.w3.org/2000/svg" ${attrs}>${body}</svg>`
   )}")`;
+
+const box = (w: number, h: number): string => `width="${w}" height="${h}" viewBox="0 0 ${w} ${h}"`;
 
 function sketchBorder(stroke: string, seed: number): string {
   const gen = rough.generator();
@@ -29,19 +31,46 @@ function sketchBorder(stroke: string, seed: number): string {
         `<path d="${p.d}" stroke="${p.stroke}" stroke-width="${p.strokeWidth}" fill="none" stroke-linecap="round"/>`
     )
     .join("");
-  return svgUri(300, 300, body);
+  return svgUri(box(300, 300), body);
 }
 
 // Painted through a CSS mask, so one baked asset serves every colour.
 function doodleArrow(): string {
   const stroke = `stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"`;
   return svgUri(
-    120,
-    46,
+    box(120, 46),
     `<path d="M8,10 C 40,40 80,4 112,30" ${stroke} stroke-dasharray="4 7"/>` +
       `<path d="M112,30 L106,18M112,30 L99,27" ${stroke}/>`
   );
 }
+
+// ASCII map -> crisp pixel art. Cells overlap by 0.03 so no seams show.
+function pixelSprite(map: readonly string[], palette: Readonly<Record<string, string>>): string {
+  const cols = map[0]?.length ?? 0;
+  const rects = map
+    .flatMap((row, y) =>
+      [...row].map((ch, x) => {
+        const fill = palette[ch];
+        return fill ? `<rect x="${x}" y="${y}" width="1.03" height="1.03" fill="${fill}"/>` : "";
+      })
+    )
+    .join("");
+  return svgUri(`viewBox="0 0 ${cols} ${map.length}" shape-rendering="crispEdges"`, rects);
+}
+
+const COIN = pixelSprite(
+  [
+    "..YYYY..",
+    ".YWYYYY.",
+    "YWYDDYYY",
+    "YYYDDYYY",
+    "YYYDDYYY",
+    "YYYDDYYY",
+    ".YYYYYY.",
+    "..YYYY..",
+  ],
+  { Y: "#ffd23e", D: "#c4973f", W: "#fff3c4" }
+);
 
 // 1. tokens.json (DTCG) -> dist/tokens.css custom properties, prefixed --px-*
 const sd = new StyleDictionary({
@@ -63,6 +92,7 @@ const sketchCss = `/* generated at build time — do not edit */
   --px-sketch-border-ink: ${sketchBorder("#222019", 42)};
   --px-sketch-border-screen: ${sketchBorder("#ece7da", 42)};
   --px-doodle-arrow: ${doodleArrow()};
+  --px-coin-sprite: ${COIN};
 }
 `;
 await writeFile("dist/sketch.css", sketchCss);
@@ -77,6 +107,7 @@ const parts: string[] = [
   "src/css/components/button.css",
   "src/css/components/card.css",
   "src/css/components/chip.css",
+  "src/css/components/coin.css",
   "src/css/components/dialogue.css",
   "src/css/components/note.css",
   "src/css/components/quest.css",

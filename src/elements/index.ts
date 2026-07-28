@@ -3,10 +3,15 @@
  * that is what the CDN <script type="module"> tag does.
  */
 import { PxAvatar } from "./px-avatar.js";
+import { PxCoin } from "./px-coin.js";
+import { coins } from "./wallet.js";
 
-export { PxAvatar };
+export { PxAvatar, PxCoin, coins };
 
-const REGISTRY: ReadonlyArray<readonly [string, CustomElementConstructor]> = [["px-avatar", PxAvatar]];
+const REGISTRY: ReadonlyArray<readonly [string, CustomElementConstructor]> = [
+  ["px-avatar", PxAvatar],
+  ["px-coin", PxCoin],
+];
 
 if (typeof customElements !== "undefined") {
   for (const [tag, ctor] of REGISTRY) {
