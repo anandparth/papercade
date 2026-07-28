@@ -44,3 +44,33 @@ px-flipcard[flipped],
   object-fit: contain;
   object-position: bottom;
 }
+
+/* a face is usually a whole card, so let it fill the scene */
+.px-flipcard-face > * {
+  width: 100%;
+  height: 100%;
+}
+
+/* the blinking call to action that sits under the card */
+.px-flipcard-hint {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  font-family: var(--px-font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--px-color-muted);
+  animation: px-blink 1.4s step-end infinite;
+}
+
+@keyframes px-blink {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+/* the original inspects on hover; click and Enter always work too */
+px-flipcard[trigger="hover"]:hover {
+  transform: perspective(var(--px-flipcard-depth, 1400px)) rotateY(180deg);
+}

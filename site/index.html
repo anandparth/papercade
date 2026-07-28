@@ -68,34 +68,56 @@
 
     <section>
       <h2>px-holo-card / px-flipcard <span class="px-hl">the unit cards</span></h2>
-      <div class="row" style="gap: 28px; align-items: flex-start">
-        <px-holo-card style="width: 240px">
-          <p class="px-mono">unit card · holo</p>
-          <h3 style="font-family: var(--px-font-display); margin: 8px 0 12px">Parth Anand</h3>
-          <div class="px-xp px-xp--screen" role="progressbar" aria-label="Craft" aria-valuemin="0" aria-valuemax="100" aria-valuenow="88">
-            <span class="px-xp-fill" style="--px-xp: 88%"></span>
-          </div>
-          <p class="px-mono" style="margin-top: 10px">move your cursor across me</p>
-        </px-holo-card>
-
-        <px-flipcard aspect="3 / 4" label="Flip between drawing and photo" style="width: 200px">
-          <div class="px-flipcard-face">
-            <div class="px-frame" style="height: 100%">
-              <div class="px-frame-fill" style="height: 100%; display: grid; place-items: center">
-                <span class="px-hand">the drawn one ✏</span>
-              </div>
+      <div class="row" style="gap: 34px; align-items: flex-start">
+        <div>
+          <px-flipcard aspect="3 / 4" label="Inspect the unit card" style="width: 300px">
+            <div class="px-flipcard-face">
+              <px-holo-card class="px-holo-card--portrait">
+                <span class="px-holo-tag">player 1 · № 001</span>
+                <p class="px-holo-foot">the front of the card ✏</p>
+              </px-holo-card>
             </div>
-          </div>
-          <div class="px-flipcard-face px-flipcard-face--back">
-            <div class="px-frame px-frame--screen" style="height: 100%">
-              <div class="px-frame-fill" style="height: 100%; display: grid; place-items: center">
-                <span class="px-mono">the real one</span>
-              </div>
+            <div class="px-flipcard-face px-flipcard-face--back">
+              <px-holo-card>
+                <span class="px-holo-tag">unit card · holo</span>
+                <div class="px-holo-portrait">
+                  <px-avatar width="52" height="88" paused></px-avatar>
+                </div>
+                <h3 class="px-holo-name">Parth Anand</h3>
+                <p class="px-holo-class">class: product designer · lvl 5+</p>
+                <div class="px-holo-stats">
+                  <div class="px-holo-stat">
+                    <span>response</span>
+                    <div class="px-xp px-xp--screen px-xp--slim" role="progressbar" aria-label="Response time" aria-valuemin="0" aria-valuemax="100" aria-valuenow="92">
+                      <span class="px-xp-fill" style="--px-xp: 92%"></span>
+                    </div>
+                    <b>&lt; 24h</b>
+                  </div>
+                  <div class="px-holo-stat">
+                    <span>timezone</span>
+                    <div class="px-xp px-xp--screen px-xp--slim" role="progressbar" aria-label="Timezone overlap" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70">
+                      <span class="px-xp-fill" style="--px-xp: 70%"></span>
+                    </div>
+                    <b>IST</b>
+                  </div>
+                  <div class="px-holo-stat">
+                    <span>continues</span>
+                    <div class="px-xp px-xp--screen px-xp--slim" role="progressbar" aria-label="Continues" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100">
+                      <span class="px-xp-fill" style="--px-xp: 100%"></span>
+                    </div>
+                    <b>∞</b>
+                  </div>
+                </div>
+                <p class="px-holo-foot">recruit this unit ✏</p>
+              </px-holo-card>
             </div>
-          </div>
-        </px-flipcard>
+          </px-flipcard>
+          <span class="px-flipcard-hint">▶ click to inspect the unit card</span>
+        </div>
 
-        <span class="px-note" style="--px-note-rot: 2deg">click the right-hand card ✏</span>
+        <span class="px-note" style="--px-note-rot: 2deg">
+          the card turns over — and the foil follows your cursor ✏
+        </span>
       </div>
     </section>
 

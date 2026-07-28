@@ -1,11 +1,21 @@
-/* px-holo-card — the foil trading card.
+/* px-holo-card — the unit card, with the foil the original never had.
    Tilt and sheen are driven entirely by two custom properties the element
    writes from the pointer: --px-holo-x and --px-holo-y, each -1 to 1. With
-   no script they stay 0 and the card is simply a flat unit card.
+   no script they stay 0 and it is simply a flat unit card.
 
    <px-holo-card>
-     <p class="px-mono">unit card · holo</p>
-     <h3>Parth Anand</h3>
+     <span class="px-holo-tag">unit card · holo</span>
+     <div class="px-holo-portrait"><px-avatar paused></px-avatar></div>
+     <h3 class="px-holo-name">Parth Anand</h3>
+     <p class="px-holo-class">class: product designer · lvl 5+</p>
+     <div class="px-holo-stats">
+       <div class="px-holo-stat">
+         <span>response time</span>
+         <div class="px-xp px-xp--screen px-xp--slim"><span class="px-xp-fill" style="--px-xp: 90%"></span></div>
+         <b>&lt; 24h</b>
+       </div>
+     </div>
+     <p class="px-holo-foot">recruit this unit ✏</p>
    </px-holo-card>
 
    Theme with --px-holo-tilt, --px-holo-depth, --px-holo-bg, --px-holo-fg.  */
@@ -13,12 +23,15 @@
 px-holo-card,
 .px-holo-card {
   position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   isolation: isolate;
-  padding: 16px 18px;
+  overflow: hidden;
+  padding: 20px 20px 16px;
   color: var(--px-holo-fg, var(--px-color-screen-headline));
   background: var(--px-holo-bg, var(--px-color-screen-card));
   border: 2px solid var(--px-color-screen-frame);
+  border-radius: 16px;
   box-shadow: 5px 7px 0 rgb(0 0 0 / 40%);
   transform: perspective(var(--px-holo-depth, 900px))
     rotateY(calc(var(--px-holo-x, 0) * var(--px-holo-tilt, 9deg)))
@@ -26,13 +39,103 @@ px-holo-card,
   transition: transform 220ms ease-out;
 }
 
-/* the foil: papercade's own sketch palette, not a generic rainbow */
+/* ---- card anatomy ------------------------------------------------------ */
+
+.px-holo-tag {
+  font-family: var(--px-font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--px-color-amber);
+}
+
+.px-holo-portrait {
+  margin: 10px 0 2px;
+  text-align: center;
+}
+
+.px-holo-name {
+  margin: 0;
+  text-align: center;
+  font-family: var(--px-font-display);
+  font-weight: 700;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+  color: var(--px-color-screen-headline);
+}
+
+.px-holo-class {
+  margin: 4px 0 0;
+  text-align: center;
+  font-family: var(--px-font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--px-color-screen-label);
+}
+
+.px-holo-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.px-holo-stat {
+  display: grid;
+  grid-template-columns: var(--px-holo-stat-label, 104px) 1fr auto;
+  gap: 9px;
+  align-items: center;
+  font-family: var(--px-font-mono);
+  font-size: 0.52rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--px-color-screen-label);
+}
+
+.px-holo-stat b {
+  font-weight: 400;
+  color: var(--px-color-screen-frame);
+}
+
+/* a full-bleed portrait face: the image fills the card, the tag sits on top */
+.px-holo-card--portrait > img,
+px-holo-card.px-holo-card--portrait > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 18%;
+}
+
+.px-holo-card--portrait .px-holo-tag {
+  position: relative;
+  z-index: 3;
+  align-self: flex-start;
+  padding: 4px 9px;
+  border-radius: 7px;
+  background: var(--px-color-screen-card);
+}
+
+.px-holo-foot {
+  margin: auto 0 0;
+  padding-top: 10px;
+  text-align: center;
+  font-family: var(--px-font-hand);
+  font-size: 0.95rem;
+  color: var(--px-color-screen-label);
+}
+
+/* ---- the foil ---------------------------------------------------------- */
+
+/* papercade's own sketch palette, not a generic rainbow */
 px-holo-card::after,
 .px-holo-card::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 1;
+  z-index: 4;
   pointer-events: none;
   opacity: var(--px-holo-shine, 0);
   mix-blend-mode: color-dodge;
@@ -50,13 +153,13 @@ px-holo-card::after,
   transition: opacity 220ms ease;
 }
 
-/* the glare: a soft highlight that tracks the cursor */
+/* a soft glare that tracks the cursor */
 px-holo-card::before,
 .px-holo-card::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 2;
+  z-index: 5;
   pointer-events: none;
   opacity: var(--px-holo-shine, 0);
   background: radial-gradient(

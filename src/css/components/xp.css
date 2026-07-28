@@ -26,6 +26,12 @@
   background: var(--px-color-screen-card);
 }
 
+/* the thin bar used in unit-card stat rows */
+.px-xp--slim {
+  height: 9px;
+  border-width: 1.6px;
+}
+
 /* segmented HP variant: each <i> is one heart/segment; add .is-gone to spend it
    <div class="px-hp"><i></i><i></i><i class="is-gone"></i></div>            */
 .px-hp {
