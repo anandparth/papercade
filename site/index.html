@@ -24,13 +24,18 @@
     h1 { font-size: clamp(3rem, 9vw, 5.5rem); line-height: 1; }
     h2 { font-family: var(--px-font-display); font-size: 1.4rem; margin-bottom: 18px; }
     .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
-    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+    .cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .swatches { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
     .sw { height: 64px; border: 2px solid var(--px-color-ink); display: flex; align-items: end; padding: 6px; }
     .sw small { font-family: var(--px-font-mono); font-size: .58rem; letter-spacing: .08em; background: var(--px-color-paper); padding: 1px 4px; }
     .demo-screen { padding: 28px; margin-top: 8px; }
     .bars { display: grid; gap: 14px; max-width: 420px; }
     footer { margin-top: 96px; text-align: center; }
     .note { color: var(--px-color-accent); }
+    @media (max-width: 700px) {
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .swatches { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body class="px-paper">
@@ -122,43 +127,43 @@
 
       <p class="px-mono" style="margin: 34px 0 6px">foil variants · hover each to compare</p>
       <p class="px-hand" style="margin-bottom: 14px">the single-hue ones are one line of css each ✏</p>
-      <div class="row" style="gap: 14px">
-        <px-holo-card style="width: 132px">
+      <div class="cards">
+        <px-holo-card>
           <span class="px-holo-tag">holo</span>
           <p class="px-holo-class" style="margin-top: 8px">spectrum · default</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--gold" style="width: 132px">
+        <px-holo-card class="px-holo-card--gold">
           <span class="px-holo-tag">gold</span>
           <p class="px-holo-class" style="margin-top: 8px">coin palette</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--silver" style="width: 132px">
+        <px-holo-card class="px-holo-card--silver">
           <span class="px-holo-tag">silver</span>
           <p class="px-holo-class" style="margin-top: 8px">neutrals</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--ice" style="width: 132px">
+        <px-holo-card class="px-holo-card--ice">
           <span class="px-holo-tag">ice</span>
           <p class="px-holo-class" style="margin-top: 8px">one hue · cyan</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--phosphor" style="width: 132px">
+        <px-holo-card class="px-holo-card--phosphor">
           <span class="px-holo-tag">phosphor</span>
           <p class="px-holo-class" style="margin-top: 8px">one hue · crt green</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--orchid" style="width: 132px">
+        <px-holo-card class="px-holo-card--orchid">
           <span class="px-holo-tag">orchid</span>
           <p class="px-holo-class" style="margin-top: 8px">one hue · violet</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--soft" style="width: 132px">
+        <px-holo-card class="px-holo-card--soft">
           <span class="px-holo-tag">soft</span>
           <p class="px-holo-class" style="margin-top: 8px">screen blend</p>
         </px-holo-card>
 
-        <px-holo-card class="px-holo-card--matte" style="width: 132px">
+        <px-holo-card class="px-holo-card--matte">
           <span class="px-holo-tag">matte</span>
           <p class="px-holo-class" style="margin-top: 8px">no foil</p>
         </px-holo-card>
