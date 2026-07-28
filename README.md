@@ -11,8 +11,8 @@
 Two CDN tags, any HTML page, no framework required. The second one is only needed for the interactive elements:
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercade@0.1/dist/papercade.css" />
-<script type="module" src="https://cdn.jsdelivr.net/npm/papercade@0.1/dist/papercade.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercade@0.2/dist/papercade.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/papercade@0.2/dist/papercade.js"></script>
 
 <body class="px-paper">
   <button class="px-btn px-btn--accent">recruit this unit</button>

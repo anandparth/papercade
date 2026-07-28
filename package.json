@@ -1,6 +1,6 @@
 {
   "name": "papercade",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A pixel × hand-drawn design library. NES.css × Excalidraw, with a character in it.",
   "style": "dist/papercade.css",
   "exports": {
@@ -36,6 +36,7 @@
   ],
   "files": [
     "dist",
+    "!dist/demo.js",
     "LICENSE",
     "LICENSE-GRAPHICS"
   ],
