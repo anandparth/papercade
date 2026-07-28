@@ -46,7 +46,8 @@
     "watch": "node --watch-path=src --watch-path=tokens --watch-path=scripts scripts/build.ts",
     "dev": "vite --open",
     "preview": "npm run build && vite",
-    "test": "playwright test"
+    "test": "playwright test",
+    "hero": "node scripts/record-hero.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.0",

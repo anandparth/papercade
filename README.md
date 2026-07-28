@@ -2,6 +2,8 @@
 
 **A pixel × hand-drawn design library.** Pixel-game UI (quest logs, XP bars, dialogue boxes, coin counters) fused with Excalidraw-style sketchiness (paper grain, ink strokes, hand-written notes) — one coherent system, unmistakably not a generic UI kit. Think *NES.css × Excalidraw, with a character in it*.
 
+![A pixel character walks down the page as you scroll, inking a hand-drawn route behind him and stopping to talk](media/hero.gif)
+
 **Live demo:** https://anandparth.github.io/papercade/ — scroll it. The character walking down the page is the scroll indicator, inking his route behind him and stopping to talk. He is built from three shipped components and nothing else.
 
 **License:** MIT (code) · CC BY 4.0 (art) · OFL (fonts)
