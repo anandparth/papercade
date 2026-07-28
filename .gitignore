@@ -3,6 +3,11 @@ node_modules/
 dist/
 site/dist/
 
+# playwright
+test-results/
+playwright-report/
+blob-report/
+
 # internal docs never publish — README.md is the only public markdown
 *.md
 !README.md

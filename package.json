@@ -45,9 +45,11 @@
     "typecheck": "tsc --noEmit",
     "watch": "node --watch-path=src --watch-path=tokens --watch-path=scripts scripts/build.ts",
     "dev": "vite --open",
-    "preview": "npm run build && vite"
+    "preview": "npm run build && vite",
+    "test": "playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.0",
     "@types/node": "^24",
     "roughjs": "^4.6.6",
     "style-dictionary": "^5.1.1",

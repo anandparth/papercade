@@ -13,5 +13,5 @@
     "skipLibCheck": true,
     "types": ["node"]
   },
-  "include": ["scripts", "src/elements", "src/demo"]
+  "include": ["scripts", "src/elements", "src/demo", "tests", "playwright.config.ts"]
 }
