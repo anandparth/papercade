@@ -36,8 +36,9 @@
   "scripts": {
     "build": "node scripts/build.ts",
     "typecheck": "tsc --noEmit",
-    "dev": "npm run build && vite site --open",
-    "preview": "npm run build && vite site"
+    "watch": "node --watch-path=src --watch-path=tokens --watch-path=scripts scripts/build.ts",
+    "dev": "vite --open",
+    "preview": "npm run build && vite"
   },
   "devDependencies": {
     "@types/node": "^24",
