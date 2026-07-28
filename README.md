@@ -97,16 +97,26 @@ coins.subscribe((total) => console.log(total));  // returns an unsubscribe
 
 ### Cards
 
-`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. The foil is four gradient stops plus a blend mode, so a new one is an override rather than a fork. Four variants ship: `--gold` (coin palette), `--silver` (neutrals only, reads as brushed chrome), `--soft` (screen blend, gentler), and `--matte` (no foil or glare at all). Roll your own the same way:
+`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. The foil is four gradient stops plus a blend mode, so a new one is an override rather than a fork. Seven variants ship: `--gold` and `--silver` (multi-tone), `--ice`, `--phosphor` and `--orchid` (single hue), `--soft` (screen blend, gentler — combines with any of the others), and `--matte` (no foil or glare at all).
+
+A single-hue foil is one declaration:
 
 ```css
-.my-foil {
+.my-foil { --px-holo-foil: #b2f2bb; }
+```
+
+For a spectrum, set the four stops individually — and `--px-holo-angle` to turn the bands:
+
+```css
+.my-spectrum {
   --px-holo-foil-1: #7de2d1; --px-holo-foil-2: #ff8fab;
   --px-holo-foil-3: #c9f299; --px-holo-foil-4: #ffd6a5;
   --px-holo-blend: screen;   /* color-dodge is punchier, screen is gentler */
   --px-holo-angle: 135deg;
 }
-``` `<px-flipcard>` turns over on click or Enter, toggling a `flipped` attribute you can also set yourself; give it two `.px-flipcard-face` children (the second marked `--back`) and an `aspect`. Both are keyboard-operable and announced.
+```
+
+Pick colors that survive the blend. `color-dodge` computes `base ÷ (1 − source)`, so over the near-black card only **light, low-saturation** colors stay metallic — pale fills clip one or two channels to white and glint. Saturated mid-tones and dark strokes lose all but one channel and go muddy: `#5b3df5` lands on a dim `#3529ff`, while `#b2f2bb` becomes a vivid `#71ff61`. `<px-flipcard>` turns over on click or Enter, toggling a `flipped` attribute you can also set yourself; give it two `.px-flipcard-face` children (the second marked `--back`) and an `aspect`. Both are keyboard-operable and announced.
 
 ## Extending
 

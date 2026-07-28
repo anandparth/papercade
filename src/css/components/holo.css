@@ -22,11 +22,12 @@
 
 px-holo-card,
 .px-holo-card {
-  /* the foil is four stops and a blend mode — override these for your own */
-  --px-holo-foil-1: var(--px-color-sketch-blue-fill);
-  --px-holo-foil-2: var(--px-color-sketch-violet-fill);
-  --px-holo-foil-3: var(--px-color-sketch-green-fill);
-  --px-holo-foil-4: var(--px-color-sketch-yellow-fill);
+  /* The foil is four stops and a blend mode. Set --px-holo-foil to one colour
+     for a single-hue sweep, or the four stops individually for a spectrum. */
+  --px-holo-foil-1: var(--px-holo-foil, var(--px-color-sketch-blue-fill));
+  --px-holo-foil-2: var(--px-holo-foil, var(--px-color-sketch-violet-fill));
+  --px-holo-foil-3: var(--px-holo-foil, var(--px-color-sketch-green-fill));
+  --px-holo-foil-4: var(--px-holo-foil, var(--px-color-sketch-yellow-fill));
   --px-holo-blend: color-dodge;
 
   position: relative;
@@ -189,41 +190,53 @@ px-holo-card:focus-visible,
    coins it is earned with. --soft trades color-dodge for screen, which keeps
    the pastels readable instead of blowing them toward white.               */
 
-.px-holo-card--gold,
-px-holo-card.px-holo-card--gold {
+/* Multi-tone: four stops each. --gold pulls the coin palette so a card
+   matches the coins it is earned with; --silver is neutrals only, and under
+   color-dodge the near-whites clip while the greys hold, reading as chrome. */
+.px-holo-card--gold {
   --px-holo-foil-1: var(--px-color-coin-shade);
   --px-holo-foil-2: var(--px-color-amber);
   --px-holo-foil-3: var(--px-color-coin-shine);
   --px-holo-foil-4: var(--px-color-coin-base);
 }
 
-.px-holo-card--soft,
-px-holo-card.px-holo-card--soft {
-  --px-holo-blend: screen;
-  --px-holo-shine: 0;
-}
-
-.px-holo-card--soft:hover,
-px-holo-card.px-holo-card--soft:hover {
-  --px-holo-shine: 0.9;
-}
-
-/* --silver: neutrals only. Under color-dodge the near-whites clip to white
-   and the greys stay grey, so the bands read as brushed chrome. */
-.px-holo-card--silver,
-px-holo-card.px-holo-card--silver {
+.px-holo-card--silver {
   --px-holo-foil-1: var(--px-color-screen-label);
   --px-holo-foil-2: var(--px-color-paper);
   --px-holo-foil-3: var(--px-color-muted);
   --px-holo-foil-4: var(--px-color-screen-frame);
 }
 
+/* Single-hue: one colour, one sweep, one line. Only the pastel fills survive
+   color-dodge over the card — the darker strokes lose all but one channel and
+   go muddy, so these three are the palette's usable single-colour foils. */
+.px-holo-card--ice {
+  --px-holo-foil: var(--px-color-sketch-blue-fill);
+}
+
+.px-holo-card--phosphor {
+  --px-holo-foil: var(--px-color-sketch-green-fill);
+}
+
+.px-holo-card--orchid {
+  --px-holo-foil: var(--px-color-sketch-violet-fill);
+}
+
+/* --soft trades color-dodge for screen, which keeps the colours readable
+   instead of blowing them toward white. Pairs with any of the above. */
+.px-holo-card--soft {
+  --px-holo-blend: screen;
+  --px-holo-shine: 0;
+}
+
+.px-holo-card--soft:hover {
+  --px-holo-shine: 0.9;
+}
+
 /* --matte: no foil and no glare. Dropping both pseudo-elements removes the
    blend-mode compositing too, so it is also the cheapest card to paint. */
 .px-holo-card--matte::before,
-.px-holo-card--matte::after,
-px-holo-card.px-holo-card--matte::before,
-px-holo-card.px-holo-card--matte::after {
+.px-holo-card--matte::after {
   content: none;
 }
 
