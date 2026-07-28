@@ -3,8 +3,12 @@ import { extname, join, resolve } from "node:path";
 import { defineConfig, type PluginOption } from "vite";
 
 const DIST = resolve("dist");
+// module scripts are refused outright unless the type is right
 const MIME: Record<string, string> = {
   ".css": "text/css",
+  ".js": "text/javascript",
+  ".cjs": "text/javascript",
+  ".webp": "image/webp",
   ".woff2": "font/woff2",
   ".txt": "text/plain",
 };
