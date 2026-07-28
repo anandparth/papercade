@@ -97,7 +97,16 @@ coins.subscribe((total) => console.log(total));  // returns an unsubscribe
 
 ### Cards
 
-`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. `<px-flipcard>` turns over on click or Enter, toggling a `flipped` attribute you can also set yourself; give it two `.px-flipcard-face` children (the second marked `--back`) and an `aspect`. Both are keyboard-operable and announced.
+`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. The foil is four gradient stops plus a blend mode, so a new one is an override rather than a fork — `--gold` (coin palette) and `--soft` (screen blend) ship as examples:
+
+```css
+.my-foil {
+  --px-holo-foil-1: #7de2d1; --px-holo-foil-2: #ff8fab;
+  --px-holo-foil-3: #c9f299; --px-holo-foil-4: #ffd6a5;
+  --px-holo-blend: screen;   /* color-dodge is punchier, screen is gentler */
+  --px-holo-angle: 135deg;
+}
+``` `<px-flipcard>` turns over on click or Enter, toggling a `flipped` attribute you can also set yourself; give it two `.px-flipcard-face` children (the second marked `--back`) and an `aspect`. Both are keyboard-operable and announced.
 
 ## Extending
 

@@ -22,6 +22,13 @@
 
 px-holo-card,
 .px-holo-card {
+  /* the foil is four stops and a blend mode — override these for your own */
+  --px-holo-foil-1: var(--px-color-sketch-blue-fill);
+  --px-holo-foil-2: var(--px-color-sketch-violet-fill);
+  --px-holo-foil-3: var(--px-color-sketch-green-fill);
+  --px-holo-foil-4: var(--px-color-sketch-yellow-fill);
+  --px-holo-blend: color-dodge;
+
   position: relative;
   display: flex;
   flex-direction: column;
@@ -138,14 +145,14 @@ px-holo-card::after,
   z-index: 4;
   pointer-events: none;
   opacity: var(--px-holo-shine, 0);
-  mix-blend-mode: color-dodge;
+  mix-blend-mode: var(--px-holo-blend);
   background-image: repeating-linear-gradient(
-    115deg,
+    var(--px-holo-angle, 115deg),
     transparent 0%,
-    var(--px-color-sketch-blue-fill) 7%,
-    var(--px-color-sketch-violet-fill) 13%,
-    var(--px-color-sketch-green-fill) 19%,
-    var(--px-color-sketch-yellow-fill) 25%,
+    var(--px-holo-foil-1) 7%,
+    var(--px-holo-foil-2) 13%,
+    var(--px-holo-foil-3) 19%,
+    var(--px-holo-foil-4) 25%,
     transparent 32%
   );
   background-size: 260% 260%;
@@ -174,6 +181,31 @@ px-holo-card:hover,
 px-holo-card:focus-visible,
 .px-holo-card:hover {
   --px-holo-shine: 0.75;
+}
+
+/* ---- foil variants ------------------------------------------------------
+   Each is only an override of the four stops and the blend mode; write your
+   own the same way. --gold pulls the coin palette, so a card matches the
+   coins it is earned with. --soft trades color-dodge for screen, which keeps
+   the pastels readable instead of blowing them toward white.               */
+
+.px-holo-card--gold,
+px-holo-card.px-holo-card--gold {
+  --px-holo-foil-1: var(--px-color-coin-shade);
+  --px-holo-foil-2: var(--px-color-amber);
+  --px-holo-foil-3: var(--px-color-coin-shine);
+  --px-holo-foil-4: var(--px-color-coin-base);
+}
+
+.px-holo-card--soft,
+px-holo-card.px-holo-card--soft {
+  --px-holo-blend: screen;
+  --px-holo-shine: 0;
+}
+
+.px-holo-card--soft:hover,
+px-holo-card.px-holo-card--soft:hover {
+  --px-holo-shine: 0.9;
 }
 
 /* keyboard users get the foil without the pointer-driven tilt */
