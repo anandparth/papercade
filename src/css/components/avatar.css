@@ -1,0 +1,54 @@
+/* px-avatar — the sprite-sheet mascot. Bring your own character.
+
+   The sheet is a uniform grid: --px-avatar-frames columns by --px-avatar-rows
+   rows, each cell drawn at --px-avatar-w by --px-avatar-h. Playback is pure
+   CSS (steps() over background-position-x); <px-avatar> only maps its
+   attributes onto these properties, so the markup below works without JS.
+
+   <px-avatar src="hero.webp" frames="6" rows="2" row="1" fps="10"></px-avatar>
+   <span class="px-avatar" style="--px-avatar-frames: 6"></span>
+
+   Defaults render the bundled mascot (CC BY 4.0, see LICENSE-GRAPHICS).     */
+
+px-avatar,
+.px-avatar {
+  display: inline-block;
+  width: var(--px-avatar-w, 143px);
+  height: var(--px-avatar-h, 240px);
+  background-image: var(--px-avatar-src, url("./art/parth-walk.webp"));
+  background-repeat: no-repeat;
+  background-size:
+    calc(var(--px-avatar-frames, 8) * var(--px-avatar-w, 143px))
+    calc(var(--px-avatar-rows, 2) * var(--px-avatar-h, 240px));
+  background-position:
+    0
+    calc(var(--px-avatar-row, 0) * -1 * var(--px-avatar-h, 240px));
+  animation: px-avatar-play calc(var(--px-avatar-frames, 8) / var(--px-avatar-fps, 12) * 1s)
+    steps(var(--px-avatar-frames, 8)) infinite;
+}
+
+@keyframes px-avatar-play {
+  to {
+    background-position-x: calc(var(--px-avatar-frames, 8) * -1 * var(--px-avatar-w, 143px));
+  }
+}
+
+/* idle: hold the first frame */
+px-avatar[paused],
+.px-avatar.is-paused {
+  animation: none;
+}
+
+/* sheets of true pixel art opt out of smoothing */
+px-avatar[pixelated],
+.px-avatar.is-pixelated {
+  image-rendering: pixelated;
+}
+
+/* house rule: sprites stay flat, and motion is never forced */
+@media (prefers-reduced-motion: reduce) {
+  px-avatar,
+  .px-avatar {
+    animation: none;
+  }
+}

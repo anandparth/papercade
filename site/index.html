@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Caveat:wght@400..700&family=Poppins:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400..600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="./dist/papercade.css" />
+  <script type="module" src="./dist/papercade.js"></script>
   <style>
     /* demo-page chrome only — everything component-shaped comes from papercade.css */
     * { margin: 0; box-sizing: border-box; }
@@ -39,6 +40,26 @@
         <a class="px-btn px-btn--pixel" href="#tokens">TOKENS</a>
       </div>
     </header>
+
+    <section>
+      <h2>px-avatar <span class="px-hl">bring your own sprite sheet</span></h2>
+      <p class="px-mono" style="margin-bottom: 14px">the only mascot component that takes your character, not ours</p>
+      <div class="row" style="align-items: flex-end; gap: 28px">
+        <figure style="margin: 0; text-align: center">
+          <px-avatar width="86" height="144" alt="Walking right"></px-avatar>
+          <figcaption class="px-mono" style="margin-top: 8px">row 0 · walk</figcaption>
+        </figure>
+        <figure style="margin: 0; text-align: center">
+          <px-avatar width="86" height="144" row="1" fps="9" alt="Walking left, slower"></px-avatar>
+          <figcaption class="px-mono" style="margin-top: 8px">row 1 · fps 9</figcaption>
+        </figure>
+        <figure style="margin: 0; text-align: center">
+          <px-avatar width="86" height="144" paused></px-avatar>
+          <figcaption class="px-mono" style="margin-top: 8px">paused · idle</figcaption>
+        </figure>
+        <span class="px-note" style="--px-note-rot: -3deg">swap <code>src</code> for your own sheet ✏</span>
+      </div>
+    </section>
 
     <section id="tokens">
       <h2>tokens <span class="px-hl">the palette</span></h2>
@@ -191,7 +212,7 @@
     </section>
 
     <footer>
-      <p class="px-mono">papercade v0.1.0 · 8 of 12 · all static components done</p>
+      <p class="px-mono">papercade v0.1.0 · 9 of 12 · sounds off by default</p>
       <p class="px-hand" style="margin-top: 8px">drawn &amp; built by parth ✏</p>
     </footer>
   </main>

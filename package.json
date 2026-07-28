@@ -7,7 +7,13 @@
     ".": "./dist/papercade.css",
     "./papercade.css": "./dist/papercade.css",
     "./tokens.css": "./dist/tokens.css",
-    "./fonts/*": "./dist/fonts/*"
+    "./elements": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/papercade.js",
+      "require": "./dist/papercade.umd.cjs"
+    },
+    "./fonts/*": "./dist/fonts/*",
+    "./art/*": "./dist/art/*"
   },
   "type": "module",
   "license": "MIT",

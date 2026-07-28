@@ -1,6 +1,8 @@
+import { execFileSync } from "node:child_process";
 import { cp, readFile, writeFile } from "node:fs/promises";
 import rough from "roughjs/bundled/rough.esm.js";
 import StyleDictionary from "style-dictionary";
+import { build as viteBuild } from "vite";
 
 const pkg = JSON.parse(await readFile("package.json", "utf8")) as { version: string };
 
@@ -71,6 +73,7 @@ const parts: string[] = [
   "dist/sketch.css",
   "src/css/base.css",
   "src/css/components/frame.css",
+  "src/css/components/avatar.css",
   "src/css/components/button.css",
   "src/css/components/card.css",
   "src/css/components/chip.css",
@@ -83,7 +86,28 @@ const banner = `/*! papercade v${pkg.version} — a pixel × sketch design libra
 const chunks = await Promise.all(parts.map((f) => readFile(f, "utf8")));
 await writeFile("dist/papercade.css", banner + chunks.join("\n"));
 
-// 3. fonts travel with the css (papercade.css references ./fonts/*)
+// 3. fonts and the default mascot travel with the css, which references
+//    ./fonts/* and ./art/* relative to itself
 await cp("src/fonts", "dist/fonts", { recursive: true });
+await cp("src/art", "dist/art", { recursive: true });
 
-console.log(`papercade v${pkg.version}: dist/papercade.css + fonts built`);
+// 4. custom elements -> ESM + UMD bundles, plus hand-off type declarations
+await viteBuild({
+  configFile: false,
+  logLevel: "warn",
+  build: {
+    outDir: "dist",
+    emptyOutDir: false,
+    lib: {
+      entry: "src/elements/index.ts",
+      name: "papercade",
+      fileName: "papercade",
+      formats: ["es", "umd"],
+    },
+  },
+});
+execFileSync(process.execPath, ["node_modules/typescript/bin/tsc", "-p", "tsconfig.build.json"], {
+  stdio: "inherit",
+});
+
+console.log(`papercade v${pkg.version}: css, fonts, art and elements built`);

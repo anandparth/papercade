@@ -6,16 +6,20 @@
 
 ## Quick start
 
-One CDN tag, any HTML page, no framework required:
+Two CDN tags, any HTML page, no framework required. The second one is only needed for the interactive elements:
 
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercade@0.1/dist/papercade.css" />
+<script type="module" src="https://cdn.jsdelivr.net/npm/papercade@0.1/dist/papercade.js"></script>
 
 <body class="px-paper">
   <button class="px-btn px-btn--accent">recruit this unit</button>
+
   <div class="px-xp" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100">
     <span class="px-xp-fill" style="--px-xp: 72%"></span>
   </div>
+
+  <px-avatar src="my-hero.webp" frames="6" rows="2" width="96" height="96" alt="My hero"></px-avatar>
 </body>
 ```
 
@@ -26,10 +30,9 @@ npm install papercade
 ```
 
 ```js
-import "papercade"; // resolves to dist/papercade.css
+import "papercade";            // the stylesheet
+import "papercade/elements";   // registers <px-avatar> and friends (typed)
 ```
-
-(A second tag for the interactive elements — the sprite-sheet avatar, coin wallet, holo card — arrives when they ship.)
 
 To hack on the library itself:
 
@@ -37,8 +40,9 @@ To hack on the library itself:
 git clone https://github.com/anandparth/papercade
 cd papercade
 pnpm install
-pnpm build        # tokens → dist/papercade.css (+ bundled fonts)
-pnpm dev          # opens the live demo at a local vite server
+pnpm build        # tokens + css + fonts + art + element bundles -> dist/
+pnpm watch        # rebuild on change, in one terminal
+pnpm dev          # live demo at localhost:5844, in another
 ```
 
 ## What's inside
@@ -48,7 +52,8 @@ pnpm dev          # opens the live demo at a local vite server
 | Tokens | DTCG `tokens/tokens.json` → Style Dictionary → `--px-*` CSS custom properties (paper/ink palette, Excalidraw stroke+fill pairs, pixel motion curves) | ✅ |
 | Surfaces & type | `.px-paper` / `.px-screen` dot-grid surfaces, `.px-mono` HUD labels, `.px-hand` notes, `.px-hl` marker highlight | ✅ |
 | Static components | `.px-frame` pixel box · `.px-btn` sketch button · `.px-card` sketch card (build-time rough.js border) · `.px-dialogue` RPG dialogue · `.px-note` / `.px-arrow` annotation · `.px-quest` quest select · `.px-chip` HUD chip · `.px-xp` / `.px-hp` meters | ✅ 8 of 8 |
-| Custom elements | `<px-avatar>` (bring-your-own-sprite-sheet mascot) · `<px-coin>` wallet · holo unit card · flip card | planned |
+| Custom elements | `<px-avatar>` bring-your-own-sprite-sheet mascot | ✅ 1 of 4 |
+| More elements | `<px-coin>` wallet · holo unit card · flip card | planned |
 
 v1 ships **exactly 12 components** and stops. No generic form controls — your `<select>` is fine as it is.
 
@@ -64,6 +69,16 @@ v1 ships **exactly 12 components** and stops. No generic form controls — your 
 - Sounds (when they land) are **opt-in everywhere** — nothing plays audio by default.
 - Every animation respects `prefers-reduced-motion`.
 - Bundled fonts: Press Start 2P + Excalifont (both SIL OFL, license files ship in `dist/fonts/`). Keep pixel type at 16px+ (Press Start 2P is drawn on an 8px grid).
+
+### Your own mascot
+
+`<px-avatar>` takes any uniform sprite grid — `frames` columns by `rows` rows. `width`/`height` are the **cell** size, so set both together to keep your sheet's aspect ratio. `row` picks the state (walk left, idle, celebrate — whatever your rows mean), `fps` sets the pace, `paused` holds the first frame, and `alt` makes it announced rather than decorative. It also exposes `play()`, `pause()`, and `playing`.
+
+```html
+<px-avatar src="hero.webp" frames="6" rows="3" row="2" fps="10" width="96" height="96" pixelated></px-avatar>
+```
+
+Omit `src` and you get the bundled mascot (my pixel self, CC BY 4.0 — attribution required, see `LICENSE-GRAPHICS`). Your own sheet stays entirely yours; the component imposes no license on it. Playback is pure CSS, so the markup renders even if the script never loads.
 
 ## Extending
 
