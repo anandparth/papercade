@@ -37,6 +37,7 @@
   "files": [
     "dist",
     "!dist/demo.js",
+    "!dist/favicon.svg",
     "LICENSE",
     "LICENSE-GRAPHICS"
   ],

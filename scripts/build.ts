@@ -47,7 +47,7 @@ function doodleArrow(): string {
 }
 
 // ASCII map -> crisp pixel art. Cells overlap by 0.03 so no seams show.
-function pixelSprite(map: readonly string[], palette: Readonly<Record<string, string>>): string {
+function pixelSvg(map: readonly string[], palette: Readonly<Record<string, string>>): string {
   const cols = map[0]?.length ?? 0;
   const rects = map
     .flatMap((row, y) =>
@@ -57,10 +57,14 @@ function pixelSprite(map: readonly string[], palette: Readonly<Record<string, st
       })
     )
     .join("");
-  return svgUri(`viewBox="0 0 ${cols} ${map.length}" shape-rendering="crispEdges"`, rects);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${cols} ${map.length}" shape-rendering="crispEdges">${rects}</svg>`;
 }
 
-const COIN = pixelSprite(
+const asUri = (svg: string): string =>
+  `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+
+/** the coin's one source of truth: the sprite and the favicon are both this */
+const COIN_SVG = pixelSvg(
   [
     "..YYYY..",
     ".YWYYYY.",
@@ -94,10 +98,13 @@ const sketchCss = `/* generated at build time — do not edit */
   --px-sketch-border-ink: ${sketchBorder("#222019", 42)};
   --px-sketch-border-screen: ${sketchBorder("#ece7da", 42)};
   --px-doodle-arrow: ${doodleArrow()};
-  --px-coin-sprite: ${COIN};
+  --px-coin-sprite: ${asUri(COIN_SVG)};
 }
 `;
 await writeFile("dist/sketch.css", sketchCss);
+
+// the demo's tab icon is the same coin — an 8x8 sprite is already favicon-sized
+await writeFile("dist/favicon.svg", COIN_SVG);
 
 // 2. concat layer order: tokens -> sketch assets -> base -> components
 const parts: string[] = [
