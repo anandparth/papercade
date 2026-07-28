@@ -6,20 +6,10 @@
 
 ## Quick start
 
-Not yet on npm — for now, clone and build:
-
-```sh
-git clone https://github.com/anandparth/papercade
-cd papercade
-pnpm install
-pnpm build        # tokens → dist/papercade.css (+ bundled fonts)
-pnpm dev          # opens the live demo at a local vite server
-```
-
-Then use it in any HTML page — no framework required:
+One CDN tag, any HTML page, no framework required:
 
 ```html
-<link rel="stylesheet" href="dist/papercade.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/papercade@0.1/dist/papercade.css" />
 
 <body class="px-paper">
   <button class="px-btn px-btn--accent">recruit this unit</button>
@@ -29,7 +19,27 @@ Then use it in any HTML page — no framework required:
 </body>
 ```
 
-Once published to npm, two CDN tags will be the whole install.
+Or from npm:
+
+```sh
+npm install papercade
+```
+
+```js
+import "papercade"; // resolves to dist/papercade.css
+```
+
+(A second tag for the interactive elements — the sprite-sheet avatar, coin wallet, holo card — arrives when they ship.)
+
+To hack on the library itself:
+
+```sh
+git clone https://github.com/anandparth/papercade
+cd papercade
+pnpm install
+pnpm build        # tokens → dist/papercade.css (+ bundled fonts)
+pnpm dev          # opens the live demo at a local vite server
+```
 
 ## What's inside
 
