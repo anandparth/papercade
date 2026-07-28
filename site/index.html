@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="./dist/papercade.css?direct" />
   <script type="module">
     import { coins } from "./dist/papercade.js";
+    import "./dist/demo.js";
     document.getElementById("resetCoins")?.addEventListener("click", () => coins.reset());
   </script>
   <style>
@@ -36,6 +37,23 @@
       .cards { grid-template-columns: repeat(2, 1fr); }
       .swatches { grid-template-columns: 1fr; }
     }
+
+    /* ---- the walking narrator (demo scene, not a component) ---- */
+    .walk { position: relative; height: 300vh; margin-top: 64px; }
+    .walk-stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+    .walk-route { position: absolute; inset: 0; width: 100%; height: 100%; }
+    .walk-route path { fill: none; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+    .walk-route .pencil { stroke: var(--px-color-line); stroke-width: 3; stroke-dasharray: 4 9; }
+    .walk-route .inked { stroke: var(--px-color-accent); stroke-width: 3; }
+    .walk-figure { position: absolute; left: var(--walk-x, 14%); top: var(--walk-y, 10%);
+                   transform: translate(-50%, -100%); will-change: left, top; }
+    .walk-figure px-avatar { display: block; }
+    .walk-bubble { position: absolute; bottom: 100%; left: 50%; margin-bottom: 14px;
+                   transform: translateX(-50%) scale(0); transform-origin: 50% 100%;
+                   transition: transform 240ms var(--px-motion-steps-pop); }
+    .walk-bubble[data-open="true"] { transform: translateX(-50%) scale(1); }
+    .walk-lede { position: absolute; inset: auto 0 8vh; text-align: center; pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) { .walk-figure { will-change: auto; } }
   </style>
 </head>
 <body class="px-paper">
@@ -50,6 +68,34 @@
         <a class="px-btn px-btn--pixel" href="#tokens">TOKENS</a>
       </div>
     </header>
+
+    <section class="walk" data-walk aria-label="A pixel character walks the page as you scroll">
+      <div class="walk-stage">
+        <svg class="walk-route" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <clipPath id="pcInk" clipPathUnits="objectBoundingBox">
+              <rect data-ink x="0" y="0" width="1" height="0" />
+            </clipPath>
+          </defs>
+          <path class="pencil" data-route
+            d="M 14,10 C 40,18 20,34 34,45 C 48,56 80,50 76,66 C 72,82 36,78 46,94" />
+          <path class="inked" clip-path="url(#pcInk)"
+            d="M 14,10 C 40,18 20,34 34,45 C 48,56 80,50 76,66 C 72,82 36,78 46,94" />
+        </svg>
+
+        <div class="walk-figure" data-walker>
+          <div class="px-dialogue px-dialogue--left walk-bubble" data-bubble data-open="false">
+            <p class="px-dialogue-box" data-line></p>
+          </div>
+          <px-avatar data-avatar width="72" height="121" paused alt="Parth, walking the page"></px-avatar>
+        </div>
+
+        <div class="walk-lede">
+          <p class="px-mono">scroll · the character is the progress bar</p>
+          <p class="px-hand" style="margin-top: 6px">he inks the route as he goes ✏</p>
+        </div>
+      </div>
+    </section>
 
     <section>
       <h2>px-avatar <span class="px-hl">bring your own sprite sheet</span></h2>

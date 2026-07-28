@@ -145,6 +145,18 @@ execFileSync(process.execPath, ["node_modules/typescript/bin/tsc", "-p", "tsconf
   stdio: "inherit",
 });
 
+// 4b. the demo page's hero script. Not part of the library — it composes
+//     shipped components against scroll, so it ships beside them, unexported.
+await viteBuild({
+  configFile: false,
+  logLevel: "warn",
+  build: {
+    outDir: "dist",
+    emptyOutDir: false,
+    lib: { entry: "src/demo/walker.ts", fileName: () => "demo.js", formats: ["es"] },
+  },
+});
+
 // 5. the demo loads ./dist/* relative to itself. Link rather than copy, so the
 //    same relative path resolves in dev and in the deployed artifact, and the
 //    build stays the single source of those files. CI copies instead.
