@@ -1,0 +1,49 @@
+/* px-btn — the sketch button.
+   Asymmetric elliptical radius reads as hand-drawn; the hard offset ink
+   shadow lifts on hover and collapses on press (the button "pushes in"). */
+
+.px-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: var(--px-font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--px-color-ink);
+  background: var(--px-color-paper);
+  padding: 0.55em 1.15em;
+  cursor: pointer;
+  border: 2px solid var(--px-color-ink);
+  border-radius: var(--px-radius-sketch);
+  box-shadow: var(--px-shadow-ink);
+  transition: transform var(--px-motion-press) ease, box-shadow var(--px-motion-press) ease;
+  text-decoration: none;
+}
+
+.px-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: var(--px-shadow-ink-hover);
+}
+
+.px-btn:active {
+  transform: translate(3px, 4px);
+  box-shadow: 0 0 0 var(--px-color-ink);
+}
+
+.px-btn--accent {
+  background: var(--px-color-accent);
+  color: #fff;
+}
+
+.px-btn--accent:hover {
+  background: var(--px-color-accent-hover);
+}
+
+/* pixel variant: square, mono, moves in steps() like a cartridge game */
+.px-btn--pixel {
+  font-family: var(--px-font-pixel);
+  font-size: 0.72rem;
+  border-radius: 0;
+  transition: transform var(--px-motion-press) var(--px-motion-steps-pop),
+    box-shadow var(--px-motion-press) var(--px-motion-steps-pop);
+}

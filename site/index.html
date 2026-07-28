@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>papercade — a pixel × sketch design library</title>
+  <meta name="description" content="papercade: pixel-game UI meets hand-drawn Excalidraw style. Tokens, CSS components, and (soon) a bring-your-own-sprite-sheet mascot." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Caveat:wght@400..700&family=Poppins:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400..600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./dist/papercade.css" />
+  <style>
+    /* demo-page chrome only — everything component-shaped comes from papercade.css */
+    * { margin: 0; box-sizing: border-box; }
+    body { min-height: 100vh; }
+    main { max-width: 880px; margin: 0 auto; padding: 56px 24px 96px; }
+    section { margin-top: 64px; }
+    h1 { font-size: clamp(3rem, 9vw, 5.5rem); line-height: 1; }
+    h2 { font-family: var(--px-font-display); font-size: 1.4rem; margin-bottom: 18px; }
+    .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 10px; }
+    .sw { height: 64px; border: 2px solid var(--px-color-ink); display: flex; align-items: end; padding: 6px; }
+    .sw small { font-family: var(--px-font-mono); font-size: .58rem; letter-spacing: .08em; background: var(--px-color-paper); padding: 1px 4px; }
+    .demo-screen { padding: 28px; margin-top: 8px; }
+    .bars { display: grid; gap: 14px; max-width: 420px; }
+    footer { margin-top: 96px; text-align: center; }
+    .note { color: var(--px-color-accent); }
+  </style>
+</head>
+<body class="px-paper">
+  <main>
+    <header>
+      <p class="px-mono">player 1 · press start</p>
+      <h1 class="px-sketch-type">papercade</h1>
+      <p class="px-hand note" style="margin-top: 10px">pixel-game UI × hand-drawn sketch — unmistakably one thing ✏</p>
+      <div class="row" style="margin-top: 28px">
+        <a class="px-btn px-btn--accent" href="#components">explore components</a>
+        <a class="px-btn" href="https://github.com/anandparth/papercade">github</a>
+        <a class="px-btn px-btn--pixel" href="#tokens">TOKENS</a>
+      </div>
+    </header>
+
+    <section id="tokens">
+      <h2>tokens <span class="px-hl">the palette</span></h2>
+      <p class="px-mono" style="margin-bottom: 12px">paper · ink · accent · amber · excalidraw pairs</p>
+      <div class="swatches">
+        <div class="sw" style="background: var(--px-color-paper)"><small>paper</small></div>
+        <div class="sw" style="background: var(--px-color-ink)"><small>ink</small></div>
+        <div class="sw" style="background: var(--px-color-accent)"><small>accent</small></div>
+        <div class="sw" style="background: var(--px-color-amber)"><small>amber</small></div>
+        <div class="sw" style="background: var(--px-color-hl)"><small>hl</small></div>
+        <div class="sw" style="background: var(--px-color-sketch-blue-fill)"><small>blue</small></div>
+        <div class="sw" style="background: var(--px-color-sketch-green-fill)"><small>green</small></div>
+        <div class="sw" style="background: var(--px-color-sketch-red-fill)"><small>red</small></div>
+        <div class="sw" style="background: var(--px-color-sketch-violet-fill)"><small>violet</small></div>
+        <div class="sw" style="background: var(--px-color-screen-bg)"><small>screen</small></div>
+      </div>
+    </section>
+
+    <section id="components">
+      <h2>px-frame <span class="px-hl">pixel-cornered box</span></h2>
+      <div class="row">
+        <div class="px-frame" style="flex: 1; min-width: 240px">
+          <div class="px-frame-fill">
+            <p class="px-mono">quest log</p>
+            <p style="margin-top: 6px">A 20-point clip-path cuts stepped corners — no images, no border hacks.</p>
+          </div>
+        </div>
+        <div class="px-frame px-frame--screen" style="flex: 1; min-width: 240px">
+          <div class="px-frame-fill">
+            <p class="px-mono">system message</p>
+            <p class="px-pixel-type" style="margin-top: 10px; font-size: .72rem">IT'S DANGEROUS TO SHIP ALONE.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>px-btn <span class="px-hl">sketch button</span></h2>
+      <div class="row">
+        <button class="px-btn">default</button>
+        <button class="px-btn px-btn--accent">accent</button>
+        <button class="px-btn px-btn--pixel">PIXEL VARIANT</button>
+      </div>
+      <p class="px-hand" style="margin-top: 14px">press one — it pushes into the paper ✏</p>
+    </section>
+
+    <section>
+      <h2>px-xp / px-hp <span class="px-hl">meters</span></h2>
+      <div class="bars">
+        <div>
+          <p class="px-mono" style="margin-bottom: 6px">xp · level 5 designer</p>
+          <div class="px-xp" role="progressbar" aria-label="XP" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72">
+            <span class="px-xp-fill" style="--px-xp: 72%"></span>
+          </div>
+        </div>
+        <div>
+          <p class="px-mono" style="margin-bottom: 6px">hp · segments</p>
+          <div class="px-hp" role="progressbar" aria-label="HP" aria-valuemin="0" aria-valuemax="5" aria-valuenow="3">
+            <i></i><i></i><i></i><i class="is-gone"></i><i class="is-gone"></i>
+          </div>
+        </div>
+      </div>
+      <div class="px-screen demo-screen px-frame--screen" style="margin-top: 20px">
+        <p class="px-mono" style="margin-bottom: 10px">same meters, game screen</p>
+        <div class="bars">
+          <div class="px-xp px-xp--screen" role="progressbar" aria-label="XP dark" aria-valuemin="0" aria-valuemax="100" aria-valuenow="45">
+            <span class="px-xp-fill" style="--px-xp: 45%"></span>
+          </div>
+          <div class="px-hp px-hp--screen" role="progressbar" aria-label="HP dark" aria-valuemin="0" aria-valuemax="5" aria-valuenow="4">
+            <i></i><i></i><i></i><i></i><i class="is-gone"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p class="px-mono">papercade v0.1.0 · 3 of 12 components · sounds off by default</p>
+      <p class="px-hand" style="margin-top: 8px">drawn &amp; built by parth ✏</p>
+    </footer>
+  </main>
+</body>
+</html>

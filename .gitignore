@@ -1,0 +1,8 @@
+# deps + build output
+node_modules/
+dist/
+site/dist/
+
+# internal docs never publish — README.md is the only public markdown
+*.md
+!README.md

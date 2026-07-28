@@ -1,0 +1,110 @@
+/* papercade base — fonts, surfaces, type utilities.
+   Depends on tokens.css (--px-*) being loaded first. */
+
+@font-face {
+  font-family: "Excalifont";
+  src: url("./fonts/Excalifont-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Press Start 2P";
+  src: url("./fonts/PressStart2P-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---- surfaces ---------------------------------------------------------- */
+
+/* light: paper with the dot-grid */
+.px-paper {
+  background-color: var(--px-color-paper);
+  background-image: radial-gradient(var(--px-color-dot) var(--px-grid-dot-size), transparent var(--px-grid-dot-size));
+  background-size: var(--px-grid-dot-gap) var(--px-grid-dot-gap);
+  color: var(--px-color-ink);
+  font-family: var(--px-font-body);
+}
+
+/* dark: the CRT/game screen, same dot-grid idiom */
+.px-screen {
+  background-color: var(--px-color-screen-bg);
+  background-image: radial-gradient(var(--px-color-screen-dot) var(--px-grid-dot-size), transparent var(--px-grid-dot-size));
+  background-size: var(--px-grid-dot-gap) var(--px-grid-dot-gap);
+  color: var(--px-color-screen-headline);
+  font-family: var(--px-font-body);
+}
+
+/* ---- type utilities ---------------------------------------------------- */
+
+/* HUD micro-label: tiny, tracked-out, uppercase mono */
+.px-mono {
+  font-family: var(--px-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--px-color-muted);
+}
+
+.px-screen .px-mono {
+  color: var(--px-color-screen-label);
+}
+
+/* hand-written margin note; pair with a trailing pencil glyph by convention */
+.px-hand {
+  font-family: var(--px-font-hand);
+  font-size: 1.25rem;
+  line-height: 1.3;
+}
+
+/* Excalidraw-style sketch heading */
+.px-sketch-type {
+  font-family: var(--px-font-sketch);
+  font-weight: 400;
+}
+
+/* pixel display type — keep >= 16px; Press Start 2P is designed for 8px multiples */
+.px-pixel-type {
+  font-family: var(--px-font-pixel);
+  font-size: 1rem;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+}
+
+/* marker-highlight swipe */
+.px-hl {
+  background: linear-gradient(
+    104deg,
+    transparent 0.4em,
+    var(--px-color-hl) 0.4em,
+    var(--px-color-hl) calc(100% - 0.3em),
+    transparent calc(100% - 0.3em)
+  );
+  padding: 0 0.35em;
+  border-radius: 2px;
+}
+
+/* pixel art must never blur */
+.px-crisp {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* ---- accessibility ----------------------------------------------------- */
+
+:where(.px-btn, [class^="px-"]):focus-visible {
+  outline: 3px solid var(--px-color-accent);
+  outline-offset: 2px;
+}
+
+/* house rule: every animation has a reduced-motion path */
+@media (prefers-reduced-motion: reduce) {
+  [class^="px-"],
+  [class^="px-"]::before,
+  [class^="px-"]::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+  }
+}

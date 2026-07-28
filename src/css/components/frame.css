@@ -1,0 +1,39 @@
+/* px-frame — the pixel-cornered box.
+   A 20-point clip-path cuts stepped 8-bit corners; applied twice
+   (outer = frame colour, inner = fill, margin 2px) so vertices stay closed.
+
+   <div class="px-frame"><div class="px-frame-fill">…</div></div>
+
+   Theme with:  --px-frame-color  (border)   --px-fill-color  (inside)   */
+
+.px-frame,
+.px-frame-fill {
+  clip-path: polygon(
+    0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0,
+    calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px,
+    100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px),
+    calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%,
+    8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px)
+  );
+}
+
+.px-frame {
+  position: relative;
+  display: block;
+  background: var(--px-frame-color, var(--px-color-ink));
+}
+
+.px-frame-fill {
+  position: relative;
+  display: block;
+  margin: 2px;
+  background: var(--px-fill-color, var(--px-color-paper));
+  padding: 14px 16px;
+}
+
+/* dark preset: light frame on the game screen */
+.px-frame--screen {
+  --px-frame-color: var(--px-color-screen-frame);
+  --px-fill-color: var(--px-color-screen-card);
+  color: var(--px-color-screen-headline);
+}

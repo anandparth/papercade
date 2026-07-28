@@ -1,0 +1,58 @@
+/* px-xp — XP / progress bar. Fill width comes from --px-xp (a percentage).
+
+   <div class="px-xp" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72">
+     <span class="px-xp-fill" style="--px-xp: 72%"></span>
+   </div>                                                                    */
+
+.px-xp {
+  display: block;
+  height: 14px;
+  border: 2px solid var(--px-color-ink);
+  background: var(--px-color-paper);
+  padding: 2px;
+}
+
+.px-xp-fill {
+  display: block;
+  height: 100%;
+  width: var(--px-xp, 0%);
+  background: var(--px-color-amber);
+  transition: width 600ms var(--px-motion-steps-fill);
+}
+
+/* dark preset */
+.px-xp--screen {
+  border-color: var(--px-color-screen-frame);
+  background: var(--px-color-screen-card);
+}
+
+/* segmented HP variant: each <i> is one heart/segment; add .is-gone to spend it
+   <div class="px-hp"><i></i><i></i><i class="is-gone"></i></div>            */
+.px-hp {
+  display: flex;
+  gap: 3px;
+  height: 22px;
+  border: 2px solid var(--px-color-ink);
+  padding: 3px;
+  background: var(--px-color-paper);
+}
+
+.px-hp > i {
+  flex: 1;
+  background: var(--px-color-sketch-green-stroke);
+}
+
+.px-hp > i.is-gone {
+  background: var(--px-color-line);
+}
+
+.px-screen .px-hp,
+.px-hp--screen {
+  border-color: var(--px-color-screen-frame);
+  background: var(--px-color-screen-card);
+}
+
+.px-hp--screen > i.is-gone,
+.px-screen .px-hp > i.is-gone {
+  background: #35312a;
+}

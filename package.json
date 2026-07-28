@@ -1,0 +1,25 @@
+{
+  "name": "papercade",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A pixel × hand-drawn design library. NES.css × Excalidraw, with a character in it.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Parth Anand (https://parthanand.in)",
+  "homepage": "https://anandparth.github.io/papercade/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anandparth/papercade.git"
+  },
+  "keywords": ["design-system", "css", "pixel-art", "8-bit", "hand-drawn", "sketch", "excalidraw", "retro", "design-tokens"],
+  "files": ["dist", "LICENSE", "LICENSE-GRAPHICS"],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "npm run build && vite site --open",
+    "preview": "npm run build && vite site"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.1.1",
+    "vite": "^7.3.4"
+  }
+}
