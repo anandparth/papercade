@@ -33,8 +33,10 @@ px-avatar,
   }
 }
 
-/* idle: hold the first frame */
+/* idle: hold the first frame. A one-frame sheet is a still by definition,
+   so it opts out too rather than looping a pointless repaint. */
 px-avatar[paused],
+px-avatar[frames="1"],
 .px-avatar.is-paused {
   animation: none;
 }

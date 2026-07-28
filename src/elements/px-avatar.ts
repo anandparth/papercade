@@ -59,7 +59,7 @@ export class PxAvatar extends HTMLElement {
 
   #sync(): void {
     const src = this.getAttribute("src");
-    this.#set("--px-avatar-src", src ? `url("${CSS.escape(src)}")` : null);
+    this.#set("--px-avatar-src", src ? `url("${this.#href(src)}")` : null);
 
     for (const [attr, { prop, min }] of Object.entries(NUMERIC)) {
       const raw = Number.parseInt(this.getAttribute(attr) ?? "", 10);
@@ -82,6 +82,22 @@ export class PxAvatar extends HTMLElement {
       this.removeAttribute("role");
       this.removeAttribute("aria-label");
     }
+  }
+
+  /**
+   * A relative URL inside a custom property can be re-resolved against the
+   * stylesheet that consumes it rather than the document, which silently
+   * breaks the path. Make it absolute here so the outcome never depends on
+   * which engine is reading it, then escape only what a CSS string cares about.
+   */
+  #href(src: string): string {
+    let absolute = src;
+    try {
+      absolute = new URL(src, document.baseURI).href;
+    } catch {
+      // a malformed src stays as authored rather than throwing
+    }
+    return absolute.replace(/["\\]/g, "\\$&");
   }
 
   #set(prop: string, value: string | null): void {
