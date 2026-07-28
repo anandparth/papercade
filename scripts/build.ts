@@ -73,8 +73,10 @@ const parts: string[] = [
   "src/css/components/frame.css",
   "src/css/components/button.css",
   "src/css/components/card.css",
+  "src/css/components/chip.css",
   "src/css/components/dialogue.css",
   "src/css/components/note.css",
+  "src/css/components/quest.css",
   "src/css/components/xp.css",
 ];
 const banner = `/*! papercade v${pkg.version} — a pixel × sketch design library | code MIT, art CC BY 4.0, fonts OFL */\n`;

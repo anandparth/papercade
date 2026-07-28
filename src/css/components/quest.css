@@ -1,0 +1,95 @@
+/* px-quest — the quest-select list (level tabs).
+   Each item is a real <button>; the active one lifts, fills with
+   --px-quest-color, and reveals its avatar slot.
+
+   <div class="px-quest">
+     <button class="px-quest-item is-active" aria-current="true">
+       <img class="px-quest-avatar" src="…" alt="">
+       <span class="px-quest-text">
+         <span class="px-quest-level">LEVEL 1</span>
+         <span class="px-quest-title">The First Quest</span>
+       </span>
+     </button>
+   </div>
+
+   Theme per item with --px-quest-color.                                     */
+
+.px-quest {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.px-quest-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 16px;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--px-font-body);
+  background: var(--px-color-paper);
+  border: 2px solid var(--px-color-ink);
+  border-radius: 12px;
+  box-shadow: var(--px-shadow-ink-soft);
+  transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.px-quest-item:hover {
+  transform: translate(-1px, -2px);
+  box-shadow: var(--px-shadow-ink-hover);
+}
+
+.px-quest-item:active {
+  transform: translate(2px, 3px);
+  box-shadow: 0 0 0 var(--px-color-ink);
+}
+
+.px-quest-item.is-active {
+  background: var(--px-quest-color, var(--px-color-sketch-yellow-fill));
+  transform: translate(-2px, -2px);
+  box-shadow: var(--px-shadow-ink-hover);
+}
+
+/* the avatar only turns up for the quest you are on */
+.px-quest-avatar {
+  display: none;
+  flex: 0 0 auto;
+  width: 22px;
+  height: auto;
+}
+
+.px-quest-item.is-active .px-quest-avatar {
+  display: block;
+}
+
+.px-quest-text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+
+.px-quest-level {
+  font-family: var(--px-font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--px-color-muted);
+}
+
+.px-quest-item.is-active .px-quest-level {
+  color: var(--px-color-ink-soft);
+}
+
+.px-quest-title {
+  font-family: var(--px-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.15;
+  color: var(--px-color-ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

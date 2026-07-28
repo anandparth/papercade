@@ -1,0 +1,51 @@
+/* px-chip — the HUD chip: coin/stat readouts and level tags.
+   Wrap the value in <b> to pull it back to ink from a coloured label.
+
+   <span class="px-chip">COINS <b>12</b></span>
+   <span class="px-chip px-chip--tag">LEVEL 5</span>
+   <span class="px-chip px-chip--screen">HP <b>3</b></span>
+
+   Theme with: --px-chip-bg, --px-chip-fg.                                   */
+
+.px-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  height: 44px;
+  padding: 0 16px;
+  font-family: var(--px-font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--px-chip-fg, var(--px-color-sketch-yellow-stroke));
+  background: var(--px-chip-bg, var(--px-color-paper));
+  border: 2px solid var(--px-color-ink);
+  border-radius: 999px;
+  box-shadow: var(--px-shadow-ink-soft);
+}
+
+.px-chip b {
+  font-weight: 500;
+  color: var(--px-color-ink);
+}
+
+/* level tag: squarer, filled, sits on the edge of a panel */
+.px-chip--tag {
+  height: auto;
+  padding: 3px 12px;
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  border-radius: 8px;
+  color: var(--px-color-ink);
+  background: var(--px-chip-bg, var(--px-color-sketch-yellow-fill));
+}
+
+.px-chip--screen {
+  --px-chip-bg: var(--px-color-screen-card);
+  --px-chip-fg: var(--px-color-amber);
+  border-color: var(--px-color-screen-frame);
+}
+
+.px-chip--screen b {
+  color: var(--px-color-screen-frame);
+}
