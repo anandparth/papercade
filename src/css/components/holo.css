@@ -39,7 +39,7 @@ px-holo-card,
   background: var(--px-holo-bg, var(--px-color-screen-card));
   border: 2px solid var(--px-color-screen-frame);
   border-radius: 16px;
-  box-shadow: 5px 7px 0 var(--px-holo-shadow, rgb(0 0 0 / 40%));
+  box-shadow: 5px 7px 0 var(--px-holo-shadow, var(--px-color-ink));
   transform: perspective(var(--px-holo-depth, 900px))
     rotateY(calc(var(--px-holo-x, 0) * var(--px-holo-tilt, 9deg)))
     rotateX(calc(var(--px-holo-y, 0) * var(--px-holo-tilt, 9deg) * -1));
@@ -208,14 +208,18 @@ px-holo-card.px-holo-card--soft:hover {
   --px-holo-shine: 0.9;
 }
 
-/* --matte: no foil, no glare, and the hard ink shadow the rest of the
-   library uses instead of a soft grey one. Dropping both pseudo-elements
-   removes the blend-mode compositing too, so it is also the cheapest card. */
-.px-holo-card--matte,
-px-holo-card.px-holo-card--matte {
-  --px-holo-shadow: var(--px-color-ink);
+/* --silver: neutrals only. Under color-dodge the near-whites clip to white
+   and the greys stay grey, so the bands read as brushed chrome. */
+.px-holo-card--silver,
+px-holo-card.px-holo-card--silver {
+  --px-holo-foil-1: var(--px-color-screen-label);
+  --px-holo-foil-2: var(--px-color-paper);
+  --px-holo-foil-3: var(--px-color-muted);
+  --px-holo-foil-4: var(--px-color-screen-frame);
 }
 
+/* --matte: no foil and no glare. Dropping both pseudo-elements removes the
+   blend-mode compositing too, so it is also the cheapest card to paint. */
 .px-holo-card--matte::before,
 .px-holo-card--matte::after,
 px-holo-card.px-holo-card--matte::before,

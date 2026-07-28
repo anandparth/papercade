@@ -14,14 +14,14 @@
   border: 12px solid transparent;
   border-image: var(--px-sketch-border-ink) 45 / 12px stretch;
   padding: 8px 12px;
-  box-shadow: var(--px-shadow-ink-soft);
+  box-shadow: var(--px-shadow-ink);
 }
 
 .px-card--screen {
   background: var(--px-color-screen-card);
   border-image-source: var(--px-sketch-border-screen);
   color: var(--px-color-screen-headline);
-  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.4);
+  box-shadow: var(--px-shadow-ink);
 }
 
 /* slight hand-placed lean; set --px-card-rot to vary per card */

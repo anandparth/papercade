@@ -14,7 +14,7 @@
   display: inline-block;
   width: max-content;
   max-width: var(--px-dialogue-max, 260px);
-  filter: drop-shadow(3px 3px 0 color-mix(in srgb, var(--px-color-ink) 30%, transparent));
+  filter: drop-shadow(3px 3px 0 var(--px-color-ink));
 }
 
 .px-dialogue-box {

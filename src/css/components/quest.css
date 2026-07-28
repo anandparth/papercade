@@ -32,7 +32,7 @@
   background: var(--px-color-paper);
   border: 2px solid var(--px-color-ink);
   border-radius: 12px;
-  box-shadow: var(--px-shadow-ink-soft);
+  box-shadow: var(--px-shadow-ink);
   transition: transform 140ms ease, box-shadow 140ms ease, background 140ms ease;
 }
 

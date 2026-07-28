@@ -21,7 +21,7 @@
   background: var(--px-chip-bg, var(--px-color-paper));
   border: 2px solid var(--px-color-ink);
   border-radius: 999px;
-  box-shadow: var(--px-shadow-ink-soft);
+  box-shadow: var(--px-shadow-ink);
 }
 
 .px-chip b {

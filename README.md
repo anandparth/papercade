@@ -97,7 +97,7 @@ coins.subscribe((total) => console.log(total));  // returns an unsubscribe
 
 ### Cards
 
-`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. The foil is four gradient stops plus a blend mode, so a new one is an override rather than a fork. Three variants ship: `--gold` (coin palette), `--soft` (screen blend, gentler), and `--matte` (no foil or glare at all, with the library's hard ink shadow instead of a soft grey one). Roll your own the same way:
+`<px-holo-card>` tilts toward the pointer and lights a foil sheen made from the library's own sketch palette; it writes `--px-holo-x` / `--px-holo-y` (−1 to 1) once per frame and CSS does the rest. The foil is four gradient stops plus a blend mode, so a new one is an override rather than a fork. Four variants ship: `--gold` (coin palette), `--silver` (neutrals only, reads as brushed chrome), `--soft` (screen blend, gentler), and `--matte` (no foil or glare at all). Roll your own the same way:
 
 ```css
 .my-foil {
