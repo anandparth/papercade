@@ -1,4 +1,4 @@
-﻿/* papercade base â€” fonts, surfaces, type utilities.
+/* papercade base — fonts, surfaces, type utilities.
    Depends on tokens.css (--px-*) being loaded first. */
 
 @font-face {
@@ -65,7 +65,7 @@
   font-weight: 400;
 }
 
-/* pixel display type â€” keep >= 16px; Press Start 2P is designed for 8px multiples */
+/* pixel display type — keep >= 16px; Press Start 2P is designed for 8px multiples */
 .px-pixel-type {
   font-family: var(--px-font-pixel);
   font-size: 1rem;
@@ -108,4 +108,3 @@
     transition-duration: 0.001s !important;
   }
 }
-
