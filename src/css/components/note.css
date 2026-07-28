@@ -1,0 +1,38 @@
+/* px-note / px-arrow — margin annotation and its doodle arrow.
+   The arrow is a dashed hand-drawn curve baked at build time into
+   --px-doodle-arrow and painted through a mask, so it inherits the
+   current text colour instead of shipping one asset per colour.
+
+   <p class="px-note">hover me — meet the real one ✏</p>
+   <span class="px-arrow" aria-hidden="true"></span>
+   <span class="px-arrow px-arrow--flip" aria-hidden="true"></span>
+   Tune per instance with --px-note-rot, --px-note-color, --px-arrow-w/h.   */
+
+.px-note {
+  display: inline-block;
+  font-family: var(--px-font-hand);
+  font-size: 1.35rem;
+  line-height: 1.3;
+  color: var(--px-note-color, var(--px-color-accent));
+  transform: rotate(var(--px-note-rot, -2deg));
+}
+
+.px-arrow {
+  display: inline-block;
+  width: var(--px-arrow-w, 120px);
+  height: var(--px-arrow-h, 46px);
+  vertical-align: middle;
+  background-color: currentColor;
+  -webkit-mask: var(--px-doodle-arrow) no-repeat center / contain;
+  mask: var(--px-doodle-arrow) no-repeat center / contain;
+}
+
+.px-arrow--flip {
+  transform: scaleX(-1);
+}
+
+/* on the dark screen, amber reads where accent violet does not */
+.px-screen .px-note,
+.px-note--screen {
+  --px-note-color: var(--px-color-amber);
+}

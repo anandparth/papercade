@@ -1,11 +1,16 @@
-import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, readFile, writeFile } from "node:fs/promises";
 import rough from "roughjs/bundled/rough.esm.js";
 import StyleDictionary from "style-dictionary";
 
 const pkg = JSON.parse(await readFile("package.json", "utf8")) as { version: string };
 
-// Pre-bake a hand-drawn border as an SVG data-URI (build-time rough.js:
-// deterministic via fixed seed — strokes never re-jitter between builds).
+// Hand-drawn assets are baked here, never at runtime: deterministic (fixed
+// rough.js seeds), SSR-safe, and free of a runtime dependency.
+const svgUri = (w: number, h: number, body: string): string =>
+  `url("data:image/svg+xml,${encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${body}</svg>`
+  )}")`;
+
 function sketchBorder(stroke: string, seed: number): string {
   const gen = rough.generator();
   const drawable = gen.rectangle(10, 10, 280, 280, {
@@ -22,8 +27,18 @@ function sketchBorder(stroke: string, seed: number): string {
         `<path d="${p.d}" stroke="${p.stroke}" stroke-width="${p.strokeWidth}" fill="none" stroke-linecap="round"/>`
     )
     .join("");
-  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300">${body}</svg>`;
-  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+  return svgUri(300, 300, body);
+}
+
+// Painted through a CSS mask, so one baked asset serves every colour.
+function doodleArrow(): string {
+  const stroke = `stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"`;
+  return svgUri(
+    120,
+    46,
+    `<path d="M8,10 C 40,40 80,4 112,30" ${stroke} stroke-dasharray="4 7"/>` +
+      `<path d="M112,30 L106,18M112,30 L99,27" ${stroke}/>`
+  );
 }
 
 // 1. tokens.json (DTCG) -> dist/tokens.css custom properties, prefixed --px-*
@@ -41,10 +56,11 @@ const sd = new StyleDictionary({
 await sd.buildAllPlatforms();
 
 // 1b. generated sketch assets (seed 42 = the papercade stroke; do not change casually)
-const sketchCss = `/* generated at build time by seeded rough.js — do not edit */
+const sketchCss = `/* generated at build time — do not edit */
 :root {
   --px-sketch-border-ink: ${sketchBorder("#222019", 42)};
   --px-sketch-border-screen: ${sketchBorder("#ece7da", 42)};
+  --px-doodle-arrow: ${doodleArrow()};
 }
 `;
 await writeFile("dist/sketch.css", sketchCss);
@@ -57,6 +73,7 @@ const parts: string[] = [
   "src/css/components/frame.css",
   "src/css/components/button.css",
   "src/css/components/card.css",
+  "src/css/components/note.css",
   "src/css/components/xp.css",
 ];
 const banner = `/*! papercade v${pkg.version} — a pixel × sketch design library | code MIT, art CC BY 4.0, fonts OFL */\n`;
@@ -66,9 +83,4 @@ await writeFile("dist/papercade.css", banner + chunks.join("\n"));
 // 3. fonts travel with the css (papercade.css references ./fonts/*)
 await cp("src/fonts", "dist/fonts", { recursive: true });
 
-// 4. refresh the demo site's copy (site/ is what CI deploys to GitHub Pages)
-await rm("site/dist", { recursive: true, force: true });
-await mkdir("site/dist", { recursive: true });
-await cp("dist", "site/dist", { recursive: true });
-
-console.log(`papercade v${pkg.version}: dist/papercade.css + fonts built, site/dist refreshed`);
+console.log(`papercade v${pkg.version}: dist/papercade.css + fonts built`);
