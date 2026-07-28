@@ -1,0 +1,30 @@
+/* px-card — the sketch card.
+   Border is a hand-drawn rough.js rectangle pre-baked at build time into
+   --px-sketch-border-ink / --px-sketch-border-screen (see dist/sketch.css),
+   stretched via border-image so any card size keeps the sketchy stroke.
+
+   <div class="px-card">…</div>
+   <div class="px-card px-card--screen">…</div>
+   <div class="px-card px-card--tilt">…</div>   (polaroid lean)            */
+
+.px-card {
+  position: relative;
+  display: block;
+  background: var(--px-color-paper);
+  border: 12px solid transparent;
+  border-image: var(--px-sketch-border-ink) 45 / 12px stretch;
+  padding: 8px 12px;
+  box-shadow: var(--px-shadow-ink-soft);
+}
+
+.px-card--screen {
+  background: var(--px-color-screen-card);
+  border-image-source: var(--px-sketch-border-screen);
+  color: var(--px-color-screen-headline);
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.4);
+}
+
+/* slight hand-placed lean; set --px-card-rot to vary per card */
+.px-card--tilt {
+  transform: rotate(var(--px-card-rot, -0.8deg));
+}

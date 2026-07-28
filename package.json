@@ -17,8 +17,22 @@
     "type": "git",
     "url": "https://github.com/anandparth/papercade.git"
   },
-  "keywords": ["design-system", "css", "pixel-art", "8-bit", "hand-drawn", "sketch", "excalidraw", "retro", "design-tokens"],
-  "files": ["dist", "LICENSE", "LICENSE-GRAPHICS"],
+  "keywords": [
+    "design-system",
+    "css",
+    "pixel-art",
+    "8-bit",
+    "hand-drawn",
+    "sketch",
+    "excalidraw",
+    "retro",
+    "design-tokens"
+  ],
+  "files": [
+    "dist",
+    "LICENSE",
+    "LICENSE-GRAPHICS"
+  ],
   "scripts": {
     "build": "node scripts/build.ts",
     "typecheck": "tsc --noEmit",
@@ -27,6 +41,7 @@
   },
   "devDependencies": {
     "@types/node": "^24",
+    "roughjs": "^4.6.6",
     "style-dictionary": "^5.1.1",
     "typescript": "^7.0.2",
     "vite": "^7.3.4"
