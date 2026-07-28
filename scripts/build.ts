@@ -1,7 +1,7 @@
 import { cp, mkdir, readFile, rm, writeFile } from "node:fs/promises";
 import StyleDictionary from "style-dictionary";
 
-const pkg = JSON.parse(await readFile("package.json", "utf8"));
+const pkg = JSON.parse(await readFile("package.json", "utf8")) as { version: string };
 
 // 1. tokens.json (DTCG) -> dist/tokens.css custom properties, prefixed --px-*
 const sd = new StyleDictionary({
@@ -18,7 +18,7 @@ const sd = new StyleDictionary({
 await sd.buildAllPlatforms();
 
 // 2. concat layer order: tokens -> base -> components
-const parts = [
+const parts: string[] = [
   "dist/tokens.css",
   "src/css/base.css",
   "src/css/components/frame.css",

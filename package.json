@@ -20,12 +20,15 @@
   "keywords": ["design-system", "css", "pixel-art", "8-bit", "hand-drawn", "sketch", "excalidraw", "retro", "design-tokens"],
   "files": ["dist", "LICENSE", "LICENSE-GRAPHICS"],
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build.ts",
+    "typecheck": "tsc --noEmit",
     "dev": "npm run build && vite site --open",
     "preview": "npm run build && vite site"
   },
   "devDependencies": {
+    "@types/node": "^24",
     "style-dictionary": "^5.1.1",
+    "typescript": "^7.0.2",
     "vite": "^7.3.4"
   }
 }
