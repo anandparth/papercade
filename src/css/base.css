@@ -94,7 +94,10 @@
 
 /* ---- accessibility ----------------------------------------------------- */
 
-:where(.px-btn, [class^="px-"]):focus-visible {
+/* The focusable custom elements are listed by tag: they carry no class, and an
+   attribute selector cannot prefix-match a tag name. Without them the browser
+   default hairline wins, which is invisible on the --screen surfaces. */
+:where(.px-btn, [class^="px-"], px-coin, px-flipcard, px-holo-card):focus-visible {
   outline: 3px solid var(--px-color-accent);
   outline-offset: 2px;
 }

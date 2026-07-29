@@ -114,6 +114,22 @@ test("meters expose their values to assistive tech", async ({ page }) => {
   }
 });
 
+test("every focusable element wears the library's focus ring, not the browser's", async ({ page }) => {
+  await page.goto("/");
+  // the custom elements carry no class, so a [class^="px-"] selector misses
+  // them and the UA hairline wins — invisible on the dark --screen surfaces
+  for (const tag of ["px-coin", "px-flipcard", "px-holo-card"]) {
+    const outline = await page
+      .locator(tag)
+      .first()
+      .evaluate((el) => {
+        (el as HTMLElement).focus({ focusVisible: true });
+        return getComputedStyle(el).outlineWidth;
+      });
+    expect(outline, `${tag} has no library focus ring`).toBe("3px");
+  }
+});
+
 test("reduced motion stops sprite playback dead rather than running it fast", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/");
