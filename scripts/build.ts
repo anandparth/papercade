@@ -175,4 +175,10 @@ if (!existsSync("site/dist")) {
   }
 }
 
+// 6. the demo footer quotes the version. Stamp it from package.json so it can
+//    never drift from what is published.
+const page = await readFile("site/index.html", "utf8");
+const stamped = page.replace(/papercade v\d+\.\d+\.\d+/, `papercade v${pkg.version}`);
+if (stamped !== page) await writeFile("site/index.html", stamped);
+
 console.log(`papercade v${pkg.version}: css, fonts, art and elements built`);
