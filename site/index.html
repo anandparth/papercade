@@ -73,6 +73,14 @@
       .walk-field { top: 200px; }
       .walk-figure px-avatar { --px-avatar-w: 54px; --px-avatar-h: 91px; }
     }
+    /* The bubble is centred on the character, so near either edge it runs past
+       .walk-stage's overflow and the line gets clipped. On a phone there isn't
+       room to solve that with width alone: inset his route so he never reaches
+       the edges, and cap the bubble to what the remaining span can hold. */
+    @media (max-width: 620px) {
+      .walk-field { left: 18%; right: 18%; }
+      .walk-bubble { max-width: 56vw; }
+    }
     @media (prefers-reduced-motion: reduce) { .walk-figure { will-change: auto; } }
   </style>
 </head>
