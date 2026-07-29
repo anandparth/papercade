@@ -11,3 +11,9 @@ blob-report/
 # internal docs never publish — README.md is the only public markdown
 *.md
 !README.md
+
+# high-resolution hero masters ship as release assets, not in the history —
+# only the light README GIF belongs in git
+media/hero-hq.*
+media/hero-4k.*
+media/hero-poster.png

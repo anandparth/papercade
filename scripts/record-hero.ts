@@ -8,9 +8,10 @@
  *   pnpm hero
  */
 import { execFileSync } from "node:child_process";
-import { mkdir, readdir, rename, rm } from "node:fs/promises";
+import { mkdir, readdir, rm } from "node:fs/promises";
 import { join } from "node:path";
 import { chromium } from "@playwright/test";
+import { choreograph } from "./hero-take.ts";
 
 const URL_ = process.env["HERO_URL"] ?? "http://localhost:5844/";
 const RAW = "media/.raw";
@@ -42,39 +43,7 @@ await page.evaluate(() => document.fonts.ready);
 await page.waitForTimeout(700);
 const takeStarted = Date.now();
 
-await page.evaluate(async () => {
-  const section = document.querySelector<HTMLElement>("[data-walk]");
-  if (!section) throw new Error("no [data-walk] section on the page");
-
-  const top = section.offsetTop;
-  const travel = section.offsetHeight - window.innerHeight;
-  const ease = (t: number): number => (t < 0.5 ? 2 * t * t : 1 - (-2 * t + 2) ** 2 / 2);
-
-  const glideTo = (progress: number, ms: number): Promise<void> =>
-    new Promise((done) => {
-      const from = window.scrollY;
-      const target = top + progress * travel;
-      const started = performance.now();
-      const step = (): void => {
-        const k = Math.min(1, (performance.now() - started) / ms);
-        window.scrollTo(0, from + (target - from) * ease(k));
-        if (k < 1) requestAnimationFrame(step);
-        else done();
-      };
-      step();
-    });
-
-  const dwell = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
-
-  await glideTo(0, 650);
-  await dwell(450);
-  // pause on each waypoint long enough for the line to finish typing
-  for (const stop of [0.08, 0.36, 0.64, 0.9]) {
-    await glideTo(stop, 850);
-    await dwell(1000);
-  }
-  await glideTo(1, 650);
-});
+await page.evaluate(choreograph, 1);
 
 const takeEnded = Date.now();
 await page.waitForTimeout(300);

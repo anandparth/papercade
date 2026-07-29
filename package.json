@@ -48,7 +48,8 @@
     "dev": "vite --open",
     "preview": "npm run build && vite",
     "test": "playwright test",
-    "hero": "node scripts/record-hero.ts"
+    "hero": "node scripts/record-hero.ts",
+    "hero:hq": "node scripts/record-hero-hq.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.0",
