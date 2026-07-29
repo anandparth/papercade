@@ -1,5 +1,10 @@
 # papercade
 
+[![npm](https://img.shields.io/npm/v/papercade?label=npm&color=FFC402)](https://www.npmjs.com/package/papercade)
+[![build](https://github.com/anandparth/papercade/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/anandparth/papercade/actions/workflows/deploy-pages.yml)
+[![code MIT](https://img.shields.io/badge/code-MIT-1c7ed6)](LICENSE)
+[![jsDelivr](https://data.jsdelivr.com/v1/package/npm/papercade/badge)](https://www.jsdelivr.com/package/npm/papercade)
+
 **A pixel × hand-drawn design library.** Pixel-game UI (quest logs, XP bars, dialogue boxes, coin counters) fused with Excalidraw-style sketchiness (paper grain, ink strokes, hand-written notes) — one coherent system, unmistakably not a generic UI kit. Think *NES.css × Excalidraw, with a character in it*.
 
 ![A pixel character walks down the page as you scroll, inking a hand-drawn route behind him and stopping to talk](media/hero.gif)
@@ -122,12 +127,27 @@ For a spectrum, set the four stops individually — and `--px-holo-angle` to tur
 
 Pick colors that survive the blend. `color-dodge` computes `base ÷ (1 − source)`, so over the near-black card only **light, low-saturation** colors stay metallic — pale fills clip one or two channels to white and glint. Saturated mid-tones and dark strokes lose all but one channel and go muddy: `#5b3df5` lands on a dim `#3529ff`, while `#b2f2bb` becomes a vivid `#71ff61`. `<px-flipcard>` turns over on click or Enter, toggling a `flipped` attribute you can also set yourself; give it two `.px-flipcard-face` children (the second marked `--back`) and an `aspect`. Both are keyboard-operable and announced.
 
+## Accessibility
+
+Retro UI has a bad reputation here and it is usually deserved — the aesthetic gets shipped and the keyboard user gets forgotten. The rules below are enforced by the test suite, not by good intentions.
+
+- **Focus is always visible.** Every focusable thing — buttons, coins, flip cards, holo cards — takes a 3px accent ring at `outline-offset: 2px`, never the browser hairline, which disappears against the dark `--screen` surfaces. Covered by a regression test.
+- **Everything interactive works from the keyboard.** `<px-coin>` and `<px-flipcard>` are reachable by Tab and operated with Enter or Space; the flip card reports its state with `aria-pressed`, a collected coin becomes `aria-disabled` and drops out of the tab order.
+- **Motion has an off switch.** Under `prefers-reduced-motion: reduce`, sprite playback stops dead on frame one rather than strobing through a 0.001s animation, and every other transition collapses to nothing. Also covered by a test.
+- **Silence is the default.** No component makes a sound unless you add `sound` to that specific coin. There is no global audio.
+- **The markup survives without JavaScript.** Playback, foil and flip are CSS reading custom properties, so a failed script leaves you with a static component, not a blank box.
+- **The mascot is honest about itself.** `<px-avatar>` with `alt` is `role="img"` and announced; without one it is `aria-hidden` and skipped, because a decorative sprite should not interrupt a screen reader.
+
+Two things you own, not the library: give meters their `role="progressbar"` and `aria-value*` attributes (the quick start shows the full set), and keep pixel type at 16px or larger — Press Start 2P is drawn on an 8px grid and blurs below that.
+
+Found something this misses? Open an issue — accessibility bugs get fixed ahead of features.
+
 ## Extending
 
 To add a component (the pattern the whole library follows):
 
 1. Create `src/css/components/<name>.css` — classes prefixed `px-`, all values from `--px-*` tokens, include a `--screen` dark preset and a reduced-motion-safe transition. Add a usage comment block at the top of the file.
-2. Register the file in the `parts` array in `scripts/build.mjs` (order matters: tokens → base → components).
+2. Register the file in the `parts` array in `scripts/build.ts` (order matters: tokens → base → components).
 3. Add a demo section to `site/index.html` — the demo page is the visual test.
 4. `pnpm build && pnpm dev` and check both light and `--screen` variants.
 
