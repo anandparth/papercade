@@ -28,6 +28,8 @@ const REACH = 0.09;
 /** ms of stillness before he faces front */
 const IDLE_AFTER = 160;
 const TYPE_MS = 26;
+/* breathing room kept between the dialogue bubble and the edge of the stage */
+const EDGE = 10;
 
 const clamp = (n: number): number => (n < 0 ? 0 : n > 1 ? 1 : n);
 
@@ -48,18 +50,36 @@ function init(section: HTMLElement): void {
   let stillSince = 0;
   let queued = 0;
   let typing = 0;
+  let stageX = 14;
+
+  /* He can stand close enough to an edge that a bubble centred on him hangs off
+     the stage and the line gets cut. Nudge it back inside; the tail keeps
+     aiming at him. Runs on every scroll frame AND on every typed character,
+     because the bubble grows as it types while nothing is scrolling. */
+  const fit = (): void => {
+    const field = walker.parentElement;
+    if (!field) return;
+    const span = field.clientWidth;
+    const half = bubble.offsetWidth / 2;
+    const centre = (stageX / 100) * span;
+    const low = half + EDGE;
+    const shift = Math.min(Math.max(centre, low), Math.max(span - low, low)) - centre;
+    bubble.style.setProperty("--bubble-shift", `${Math.round(shift)}px`);
+  };
 
   const say = (text: string): void => {
     window.clearInterval(typing);
     bubble.dataset.open = "true";
     if (reduced()) {
       line.textContent = text;
+      fit();
       return;
     }
     let i = 0;
     typing = window.setInterval(() => {
       i += 1;
       line.textContent = text.slice(0, i) + (i < text.length ? "▌" : "");
+      fit();
       if (i >= text.length) window.clearInterval(typing);
     }, TYPE_MS);
   };
@@ -109,6 +129,9 @@ function init(section: HTMLElement): void {
     // the tail points back at him, so it flips once he crosses the middle
     bubble.classList.toggle("px-dialogue--right", point.x > 50);
     bubble.classList.toggle("px-dialogue--left", point.x <= 50);
+
+    stageX = point.x;
+    fit();
   };
 
   const schedule = (): void => {

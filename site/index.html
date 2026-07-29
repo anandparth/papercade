@@ -64,7 +64,12 @@
                    transform: translate(-50%, -100%); will-change: left, top; }
     /* sized through the tokens, so a media query can shrink him cleanly */
     .walk-figure px-avatar { display: block; --px-avatar-w: 72px; --px-avatar-h: 121px; }
-    .walk-bubble { position: absolute; bottom: 100%; left: 50%; margin-bottom: 14px;
+    /* --bubble-shift is written by the walker: the bubble is centred on him, so
+       near either edge a long line would run past .walk-stage's overflow and be
+       clipped. The shift nudges it back on-stage; the tail still points at him. */
+    .walk-bubble { position: absolute; bottom: 100%; margin-bottom: 14px;
+                   left: calc(50% + var(--bubble-shift, 0px));
+                   --px-dialogue-max: min(260px, calc(100vw - 48px));
                    transform: translateX(-50%) scale(0); transform-origin: 50% 100%;
                    transition: transform 240ms var(--px-motion-steps-pop); }
     .walk-bubble[data-open="true"] { transform: translateX(-50%) scale(1); }
@@ -72,14 +77,6 @@
     @media (max-height: 780px) {
       .walk-field { top: 200px; }
       .walk-figure px-avatar { --px-avatar-w: 54px; --px-avatar-h: 91px; }
-    }
-    /* The bubble is centred on the character, so near either edge it runs past
-       .walk-stage's overflow and the line gets clipped. On a phone there isn't
-       room to solve that with width alone: inset his route so he never reaches
-       the edges, and cap the bubble to what the remaining span can hold. */
-    @media (max-width: 620px) {
-      .walk-field { left: 18%; right: 18%; }
-      .walk-bubble { max-width: 56vw; }
     }
     @media (prefers-reduced-motion: reduce) { .walk-figure { will-change: auto; } }
   </style>

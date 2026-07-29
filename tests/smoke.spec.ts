@@ -114,6 +114,25 @@ test("meters expose their values to assistive tech", async ({ page }) => {
   }
 });
 
+test("the walk dialogue stays inside the stage on a narrow screen", async ({ page }) => {
+  await page.setViewportSize({ width: 393, height: 659 });
+  await page.goto("/");
+  const top = await page.evaluate(() => (document.querySelector(".walk") as HTMLElement).offsetTop);
+  // the first waypoint is the worst case: he stands furthest left while the
+  // longest line types, and the bubble grows around him with no scroll running
+  await page.evaluate((y) => scrollTo(0, y), top);
+  await page.waitForTimeout(1600);
+  const gap = await page.evaluate(() => {
+    const bubble = document.querySelector(".walk-bubble") as HTMLElement;
+    const stage = document.querySelector(".walk-stage") as HTMLElement;
+    const b = bubble.getBoundingClientRect(), s = stage.getBoundingClientRect();
+    return { left: b.left - s.left, right: s.right - b.right, text: bubble.textContent?.trim() ?? "" };
+  });
+  expect(gap.text.length, "bubble should be speaking here").toBeGreaterThan(0);
+  expect(gap.left, "dialogue clipped off the left of the stage").toBeGreaterThanOrEqual(0);
+  expect(gap.right, "dialogue clipped off the right of the stage").toBeGreaterThanOrEqual(0);
+});
+
 test("every focusable element wears the library's focus ring, not the browser's", async ({ page }) => {
   await page.goto("/");
   // the custom elements carry no class, so a [class^="px-"] selector misses
